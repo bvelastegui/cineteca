@@ -1,10 +1,14 @@
 <div align="center">
     <h1>CineTeca</h1>
-    <img style="margin-top: 10px" src="assets/img/logo.svg" alt="CineTeca Logo" width="200">
-    <p style="margin-top: 10px">
+    <p>&nbsp;</p>
+    <img src="assets/img/logo.svg" alt="CineTeca Logo" width="200">
+    <p>&nbsp;</p>
+    <p>
         <strong>Aplicación web creada con JavaScript Vanilla que permite a los usuarios explorar películas, filtrarlas y gestionar listas personalizadas sincronizadas directamente con la API de TMDB.</strong>
     </p>
 </div>
+
+---
 
 ## Información del Proyecto
 
@@ -14,7 +18,7 @@
 - Evelyn Morocho
 
 > [!NOTE]
-> **Documentación completa**: Ver [OBJETIVO.md](OBJETIVO.md) para objetivos detallados, alcance del proyecto y división de tareas.
+> Ver [OBJETIVO.md](OBJETIVO.md) para objetivos detallados, alcance del proyecto y división de tareas.
 
 ---
 
@@ -64,7 +68,7 @@ CineTeca es una biblioteca digital de películas que consume la API de The Movie
 
 ### Obtener API Key de TMDB
 1. Crear cuenta en [The Movie Database](https://www.themoviedb.org/)
-2. Ir a Configuración → API
+2. Ir a Configuración -> API
 3. Solicitar API Key (seleccionar "Developer")
 4. Copiar la API Key generada
 
@@ -95,27 +99,27 @@ La arquitectura de archivos HTML, CSS y JavaScript se definirá durante la fase 
 > [!NOTE]
 > Las siguientes funcionalidades serán implementadas según la división de tareas acordada:
 
-### 1. Autenticación (Responsable: Bryan Velastegui)
+### 1. Autenticación
 - Login con API Key de TMDB
 - Validación de credenciales
 - Persistencia de sesión
 
-### 2. Dashboard Principal (Responsable: Bryan Velastegui)
+### 2. Dashboard Principal
 - **Tendencias**: Películas más populares de la semana
 - **Estrenos**: Películas en cartelera actuales
 
-### 3. Filtros Avanzados (Responsable: Bryan Velastegui)
+### 3. Filtros Avanzados
 - Filtrar por género (acción, comedia, drama, etc.)
 - Buscar por actor o director
 - Filtrar por fecha de estreno
 
-### 4. Gestión de Listas - CRUD (Responsable: Evelyn Morocho)
+### 4. Gestión de Listas - CRUD
 - **Crear** listas personalizadas
 - **Ver** listas existentes y su contenido
 - **Agregar** películas a listas
 - **Eliminar** películas de listas o borrar listas completas
 
-### 5. Sistema de Caché (Responsable: Evelyn Morocho)
+### 5. Sistema de Caché
 - Almacenamiento temporal de datos en localStorage
 - TTL (Time To Live) de 1 hora
 - Reducción de llamadas a la API
