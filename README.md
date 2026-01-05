@@ -1,12 +1,10 @@
 <div align="center">
     <h1>CineTeca</h1>
-    <img src="assets/img/logo.svg" alt="CineTeca Logo" width="200">
-    <p>
+    <img style="margin-top: 10px" src="assets/img/logo.svg" alt="CineTeca Logo" width="200">
+    <p style="margin-top: 10px">
         <strong>Aplicación web creada con JavaScript Vanilla que permite a los usuarios explorar películas, filtrarlas y gestionar listas personalizadas sincronizadas directamente con la API de TMDB.</strong>
     </p>
 </div>
-
----
 
 ## Información del Proyecto
 
