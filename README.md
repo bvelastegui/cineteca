@@ -8,34 +8,35 @@
 
 ---
 
-## 📋 Información del Proyecto
+## Información del Proyecto
 
 **Proyecto Final de Asignatura** - Desarrollo de Software  
 **Integrantes**:
 - Bryan Velastegui
 - Evelyn Morocho
 
-📄 **Documentación completa**: Ver [OBJETIVO.md](OBJETIVO.md) para objetivos detallados, alcance del proyecto y división de tareas.
+> [!NOTE]
+> **Documentación completa**: Ver [OBJETIVO.md](OBJETIVO.md) para objetivos detallados, alcance del proyecto y división de tareas.
 
 ---
 
-## 🎯 Descripción
+## Descripción
 
 CineTeca es una biblioteca digital de películas que consume la API de The Movie Database (TMDB) para ofrecer información actualizada sobre películas populares, estrenos recientes y gestión de listas personalizadas. El proyecto implementa patrones de arquitectura modernos como ETL (Extract-Transform-Load) y estrategias de caché para optimizar el rendimiento.
 
 ### Características Principales
 
-- 🔐 **Autenticación con API Key** de TMDB
-- 📊 **Dashboard** con tendencias y estrenos recientes
-- 🔍 **Filtros avanzados** por género, personas y fecha
-- 📝 **CRUD completo** de listas personalizadas
-- 💾 **Sistema de caché inteligente** con localStorage
-- 📱 **Diseño responsivo** compatible con móviles, tablets y desktop
-- ⚡ **Optimización** para prevenir rate limiting de la API
+- **Autenticación con API Key** de TMDB
+- **Dashboard** con tendencias y estrenos recientes
+- **Filtros avanzados** por género, personas y fecha
+- **CRUD completo** de listas personalizadas
+- **Sistema de caché inteligente** con localStorage
+- **Diseño responsivo** compatible con móviles, tablets y desktop
+- **Optimización** para prevenir rate limiting de la API
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 - **HTML5**: Estructura semántica
 - **CSS3**: Estilos personalizados
@@ -46,13 +47,16 @@ CineTeca es una biblioteca digital de películas que consume la API de The Movie
 - **GitHub Pages**: Deployment
 
 ### Restricciones
-❌ No se permite usar: React, Vue, Angular, jQuery u otros frameworks JavaScript
+
+> [!IMPORTANT]
+> No se permite usar: React, Vue, Angular, jQuery u otros frameworks JavaScript
 
 ---
 
-## 🚀 Estado del Proyecto
+## Estado del Proyecto
 
-> ⚠️ **PROYECTO EN FASE DE PLANIFICACIÓN**
+> [!WARNING]
+> **PROYECTO EN FASE DE PLANIFICACIÓN**
 > 
 > Actualmente el proyecto está en etapa de planificación y diseño. Los archivos de implementación (HTML, CSS, JavaScript) se desarrollarán próximamente según la estructura definida por el equipo.
 
@@ -68,7 +72,7 @@ CineTeca es una biblioteca digital de películas que consume la API de The Movie
 
 ---
 
-## 📂 Estructura del Proyecto
+## Estructura del Proyecto
 
 ### Archivos Actuales (Documentación)
 ```
@@ -88,8 +92,9 @@ La arquitectura de archivos HTML, CSS y JavaScript se definirá durante la fase 
 
 ---
 
-## 🎭 Funcionalidades Planeadas
+## Funcionalidades Planeadas
 
+> [!NOTE]
 > Las siguientes funcionalidades serán implementadas según la división de tareas acordada:
 
 ### 1. Autenticación (Responsable: Bryan Velastegui)
@@ -119,8 +124,9 @@ La arquitectura de archivos HTML, CSS y JavaScript se definirá durante la fase 
 
 ---
 
-## 🔌 Endpoints de TMDB API a Utilizar
+## Endpoints de TMDB API a Utilizar
 
+> [!NOTE]
 > Estos son los endpoints de la API de TMDB que se integrarán en el proyecto:
 
 | Endpoint | Método | Descripción | Responsable |
@@ -139,7 +145,7 @@ La arquitectura de archivos HTML, CSS y JavaScript se definirá durante la fase 
 
 ---
 
-## 👥 División de Tareas
+## División de Tareas
 
 ### Bryan Velastegui
 - Autenticación con API Key
@@ -160,9 +166,10 @@ La arquitectura de archivos HTML, CSS y JavaScript se definirá durante la fase 
 
 ---
 
-## 🌐 Despliegue
+## Despliegue
 
-> 📌 **Responsable del despliegue**: Evelyn Morocho
+> [!TIP]
+> **Responsable del despliegue**: Evelyn Morocho
 
 La aplicación será desplegada en GitHub Pages una vez completada la implementación.
 
@@ -186,10 +193,11 @@ git push origin main
 
 ---
 
-## 🧪 Arquitectura Técnica Planificada
+## Arquitectura Técnica Planificada
 
 ### Patrón ETL (Extract-Transform-Load)
 
+> [!NOTE]
 > Este patrón se implementará para todas las operaciones con la API:
 
 ```javascript
@@ -222,6 +230,7 @@ function renderMovies(movies) {
 
 ### Sistema de Caché
 
+> [!NOTE]
 > Estrategia de caché que implementará Evelyn Morocho:
 
 ```javascript
@@ -252,7 +261,7 @@ function setCacheData(key, data) {
 
 ---
 
-## 🤝 Contribución
+## Contribución
 
 Este es un proyecto académico. Para contribuir:
 
@@ -264,7 +273,7 @@ Este es un proyecto académico. Para contribuir:
 
 ---
 
-## 📝 Licencia
+## Licencia
 
 Este proyecto está licenciado bajo la **MIT License** - ver el archivo [LICENSE](LICENSE) para más detalles.
 
@@ -278,7 +287,7 @@ Este proyecto fue desarrollado como parte de un proyecto final de asignatura de 
 
 ---
 
-## 📚 Referencias
+## Referencias
 
 - [TMDB API Documentation](https://developers.themoviedb.org/3)
 - [Bootstrap 5 Documentation](https://getbootstrap.com/docs/5.3/)
@@ -287,7 +296,7 @@ Este proyecto fue desarrollado como parte de un proyecto final de asignatura de 
 
 ---
 
-## 📧 Contacto
+## Contacto
 
 **Bryan Velastegui** - [@bvelastegui](https://github.com/bvelastegui)  
 **Evelyn Morocho** - [@evelyn18m](https://github.com/evelyn18m)
