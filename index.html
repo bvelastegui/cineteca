@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +8,35 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"
   >
+  <style>
+    html, body {
+      height: 100%;
+    }
+  </style>
+  <noscript>
+    <style>
+      main {
+        display: none;
+      }
+
+      noscript {
+        max-width: var(--bs-breakpoint-sm);
+        padding: 15px;
+      }
+    </style>
+  </noscript>
 </head>
-<body>
-<h1>Hola mundo!</h1>
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+<noscript class="no-script w-100 m-auto">
+  <img class="mb-4" width="72" src="/assets/img/logo.svg" alt="">
+  <p class="h3 mb-3 fw-normal">
+    Lo sentimos, pero CineTeca no funciona correctamente sin JavaScript habilitado.
+  </p>
+  <p class="h3 fw-normal">Por favor, habilítalo para continuar.</p>
+</noscript>
+<main class="container">
+  <!--  @TODO: implementar dashboard -->
+</main>
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
