@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+    <g transform="rotate(-90 64 64)">
+        <rect x="0" y="0" width="128" height="128" rx="8" fill="#FF5252"/>
+
+        <g fill="#fff">
+            <rect x="4" y="8" width="16" height="14" rx="2" />
+            <rect x="4" y="28" width="16" height="14" rx="2" />
+            <rect x="4" y="48" width="16" height="14" rx="2" />
+            <rect x="4" y="68" width="16" height="14" rx="2" />
+            <rect x="4" y="88" width="16" height="14" rx="2" />
+            <rect x="4" y="108" width="16" height="14" rx="2" />
+
+            <rect x="108" y="8" width="16" height="14" rx="2" />
+            <rect x="108" y="28" width="16" height="14" rx="2" />
+            <rect x="108" y="48" width="16" height="14" rx="2" />
+            <rect x="108" y="68" width="16" height="14" rx="2" />
+            <rect x="108" y="88" width="16" height="14" rx="2" />
+            <rect x="108" y="108" width="16" height="14" rx="2" />
+        </g>
+
+        <g fill="#fff" transform="rotate(90 79 65) scale(1.2)">
+            <path stroke="#FF5252" stroke-width="2" d="M68,44H42c-8.8,0-16,7.2-16,16v8c0,8.8,7.2,16,16,16h26v-12H44c-2.2,0-4-1.8-4-4v-8c0-2.2,1.8-4,4-4h24V44z"/>
+            <path stroke="#FF5252" stroke-width="2" d="M54,44h46v12H88v36H75V56H64V56z"/>
+        </g>
+    </g>
+</svg>
