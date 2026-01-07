@@ -31,7 +31,21 @@ function getApiHeaders (apiKey) {
   });
 }
 
-  const response = await fetch(AUTHENTICATION_URL, { headers });
+/**
+ * Método para autenticar utilizando una API KEY.
+ * Este método realiza una solicitud a un endpoint definido para validar la autenticación.
+ *
+ * @param {Object} param - Objeto que contiene los parámetros necesarios.
+ * @param {string} param.apiKey - La clave de API utilizada para la autenticación.
+ * @return {Promise<void>} Una promesa que se resuelve si la autenticación es exitosa.
+ *                          Lanza un error si la autenticación no es válida.
+ */
+export async function authentication ({ apiKey }) {
+
+  const response = await fetch(
+    AUTHENTICATION_URL,
+    { headers: getApiHeaders(apiKey) },
+  );
 
   if (!response.ok) {
     throw new Error('API KEY invalida');
@@ -44,13 +58,19 @@ function getApiHeaders (apiKey) {
   }
 }
 
+/**
+ * Genera un token de solicitud a partir de una clave de API proporcionada.
+ *
+ * @param {Object} config Objeto de configuración.
+ * @param {string} config.apiKey Clave de API utilizada para autenticar la solicitud.
+ * @return {Promise<{ request_token: string }>} Una promesa que resuelve a un objeto con la respuesta de la API.
+ * @throws {Error} Lanza un error si la autenticación falla o si la respuesta no contiene un token de solicitud.
+ */
 export async function generateRequestToken ({ apiKey }) {
-  const headers = new Headers({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${apiKey}`,
-    'Accept': 'application/json',
-  });
-  const response = await fetch(REQUEST_TOKEN_URL, { headers });
+  const response = await fetch(
+    REQUEST_TOKEN_URL,
+    { headers: getApiHeaders(apiKey) },
+  );
 
   if (!response.ok) {
     throw new Error('Authentication failed');
@@ -69,15 +89,18 @@ export async function generateRequestToken ({ apiKey }) {
   return data;
 }
 
+/**
+ * Genera una sesión autenticada utilizando un token de solicitud y una clave de API.
+ *
+ * @param {Object} params - Objeto de configuración para generar la sesión.
+ * @param {string} params.requestToken - El token de solicitud proporcionado para la autenticación.
+ * @param {string} params.apiKey - Clave de API utilizada para autenticar la solicitud.
+ * @return {Promise<{ session_id: string }>} Retorna un objeto que contiene los datos de la sesión generada, incluyendo el identificador de sesión (`session_id`).
+ * @throws {Error} Si la autenticación falla o si los datos de la sesión no son válidos.
+ */
 export async function generateSession ({ requestToken, apiKey }) {
-  const headers = new Headers({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${apiKey}`,
-    'Accept': 'application/json',
-  });
-
   const response = await fetch(SESSION_URL, {
-    headers,
+    headers: getApiHeaders(apiKey),
     method: 'POST',
     body: JSON.stringify({ request_token: requestToken }),
   });
