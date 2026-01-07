@@ -1,5 +1,6 @@
 import {
   authentication,
+  deleteSession,
   fetchAccountDetails,
   generateRequestToken,
   generateSession,
@@ -95,5 +96,13 @@ export default class Auth {
 
   static check () {
     return !!this.apiKey && !!this.sessionId && !!this.user;
+  }
+
+  static async logout () {
+    await deleteSession({ sessionId: this.sessionId, apiKey: this.apiKey });
+
+    localStorage.removeItem(`${AUTH_CACHE_PREFIX}_key`);
+    localStorage.removeItem(`${AUTH_CACHE_PREFIX}_session_id`);
+    localStorage.removeItem(`${AUTH_CACHE_PREFIX}_user`);
   }
 }

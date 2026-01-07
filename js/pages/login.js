@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (searchParams.has('request_token') && searchParams.has('approved')) {
     try {
       await Auth.createSession();
+      await Auth.loadUserData();
       redirect(HOME_URL);
     } catch (error) {
       console.error(error);

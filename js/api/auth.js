@@ -122,3 +122,18 @@ export async function fetchAccountDetails ({ apiKey, sessionId }) {
 
   return await response.json();
 }
+
+export async function deleteSession ({ apiKey, sessionId }) {
+  try {
+    await fetch(
+      DELETE_SESSION_URL,
+      {
+        headers: getApiHeaders(apiKey),
+        method: 'DELETE',
+        body: JSON.stringify({ session_id: sessionId }),
+      },
+    );
+  } catch {
+    // no se realiza nada en caso de error.
+  }
+}
