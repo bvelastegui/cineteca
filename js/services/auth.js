@@ -38,13 +38,13 @@ export default class Auth {
       return null;
     }
 
-    return userAdapter.fromJson(JSON.parse(userJson));
+    return userAdapter(JSON.parse(userJson));
   }
 
   static set user (details) {
     localStorage.setItem(
       `${AUTH_CACHE_PREFIX}_user`,
-      JSON.stringify(userAdapter.fromApi(details)),
+      JSON.stringify(details),
     );
   }
 
