@@ -1,15 +1,35 @@
 import {
   AUTHENTICATION_URL,
+  DELETE_SESSION_URL,
   REQUEST_TOKEN_URL,
   SESSION_URL,
-} from '/js/constants.js';
+  USER_DETAILS_URL,
+} from '/js/config/constants.js';
 
-export async function authentication ({ apiKey }) {
-  const headers = new Headers({
+/**
+ * @typedef {Object} Avatar
+ * @property {Object} gravatar
+ * @property {string} gravatar.hash
+ * @property {Object} tmdb
+ * @property {string|null} tmdb.avatar_path
+ */
+
+/**
+ * @typedef {Object} AccountDetails
+ * @property {Avatar} avatar - Avatar del usuario.
+ * @property {number} id - Id único del usuario.
+ * @property {string} iso_639_1 - Idioma principal del usuario.
+ * @property {string} iso_3366_1 - Regionalidad del usuario.
+ * @property {string} name - Nombre completo del usuario.
+ */
+
+function getApiHeaders (apiKey) {
+  return new Headers({
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${apiKey}`,
     'Accept': 'application/json',
   });
+}
 
   const response = await fetch(AUTHENTICATION_URL, { headers });
 
@@ -77,4 +97,28 @@ export async function generateSession ({ requestToken, apiKey }) {
   }
 
   return data;
+}
+
+/**
+ * Obtiene los detalles de una cuenta de usuario utilizando un API Key y un ID de sesión.
+ *
+ * @param {Object} params - Objeto que contiene los parámetros necesarios para la solicitud.
+ * @param {string} params.apiKey - Clave de API proporcionada para autenticar la solicitud.
+ * @param {string} params.sessionId - ID de sesión único para identificar al usuario.
+ * @return {Promise<AccountDetails>} Una promesa que resuelve con un objeto que contiene los detalles de la cuenta de usuario.
+ * @throws {Error} Lanza un error si la autenticación falla o si la respuesta no es exitosa.
+ */
+export async function fetchAccountDetails ({ apiKey, sessionId }) {
+  const response = await fetch(
+    `${USER_DETAILS_URL}?session_id=${sessionId}`,
+    {
+      headers: getApiHeaders(apiKey),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error('Authentication failed');
+  }
+
+  return await response.json();
 }

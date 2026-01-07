@@ -7,3 +7,4 @@ export const API_URL = 'https://api.themoviedb.org/3';
 export const AUTHENTICATION_URL = `${API_URL}/authentication`;
 export const REQUEST_TOKEN_URL = `${API_URL}/authentication/token/new`;
 export const SESSION_URL = `${API_URL}/authentication/session/new`;
+export const USER_DETAILS_URL = `${API_URL}/account/22561238`;
