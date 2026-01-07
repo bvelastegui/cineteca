@@ -51,6 +51,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       ui.showPageLoader(false);
     }
 
+    if (!Auth.apiKey) {
+      return;
+    }
+
     try {
       ui.showPageLoader(true);
       await Auth.requestAuthorization();
