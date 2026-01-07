@@ -6,7 +6,10 @@ import {
   generateSession,
 } from '/js/api/auth.js';
 import { redirect } from '/js/utils/helpers.js';
-import { TMDB_AUTHORIZATION_BASE_URL } from '/js/config/constants.js';
+import {
+  LOGIN_URL,
+  TMDB_AUTHORIZATION_BASE_URL,
+} from '/js/config/constants.js';
 import { userAdapter } from '/js/adapters/userAdapter.js';
 
 const AUTH_CACHE_PREFIX = 'auth';
@@ -60,7 +63,7 @@ export default class Auth {
     const request = await generateRequestToken({ apiKey: this.apiKey });
 
     redirect(`${TMDB_AUTHORIZATION_BASE_URL}/${request.request_token}`, {
-      redirect_to: window.location.href,
+      redirect_to: window.location.origin + LOGIN_URL,
     });
   }
 
