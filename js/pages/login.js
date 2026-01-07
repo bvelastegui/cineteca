@@ -1,6 +1,7 @@
 import Auth from '/js/services/auth.js';
 import { redirect } from '/js/utils/helpers.js';
 import { HOME_URL } from '/js/config/constants.js';
+import { ui } from '/js/utils/ui.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (Auth.check()) {
@@ -8,7 +9,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  const overlay = document.querySelector('#overlay');
   const loginForm = document.querySelector('#form-login');
   const inputApiKey = document.querySelector('#key');
   const invalidFeedback = inputApiKey
@@ -42,17 +42,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-      overlay.classList.remove('d-none');
+      ui.showPageLoader(true);
       await Auth.login(apiKey);
     } catch (error) {
       inputApiKey.classList.add('is-invalid');
       invalidFeedback.innerText = 'El API KEY proporcionado es invalido.';
     } finally {
-      overlay.classList.add('d-none');
+      ui.showPageLoader(false);
     }
 
     try {
-      overlay.classList.remove('d-none');
+      ui.showPageLoader(true);
       await Auth.requestAuthorization();
     } catch (error) {
       inputApiKey.classList.add('is-invalid');
@@ -60,5 +60,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  overlay.classList.add('d-none');
+  ui.showPageLoader(false);
 });

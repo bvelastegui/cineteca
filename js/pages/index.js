@@ -10,5 +10,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderUserData(Auth.user);
-  ui.toggleLoader(false);
+  ui.showPageLoader(false);
 });

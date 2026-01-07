@@ -27,7 +27,7 @@ export function renderUserData (user) {
 
   logoutButton.addEventListener('click', async (e) => {
     e.preventDefault();
-    ui.toggleLoader(true);
+    ui.showPageLoader(true);
     await Auth.logout();
     window.location.reload();
   });
