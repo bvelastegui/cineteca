@@ -1,6 +1,6 @@
 import Auth from '/js/services/auth.js';
-import { redirect } from '/js/utils.js';
-import { HOME_URL } from '/js/constants.js';
+import { redirect } from '/js/utils/helpers.js';
+import { HOME_URL } from '/js/config/constants.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (Auth.check()) {
