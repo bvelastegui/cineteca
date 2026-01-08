@@ -16,7 +16,7 @@ export const userAdapter = {
    */
   fromApi: (user) => {
     const avatarUrl = user.avatar.tmdb.avatar_path !== null
-      ? `https://image.tmdb.org/t/p/w90/${user.avatar.tmdb.avatar_path}`
+      ? `https://image.tmdb.org/t/p/original${user.avatar.tmdb.avatar_path}`
       : `https://www.gravatar.com/avatar/${user.avatar.gravatar.hash}?d=mp&s=90`;
 
     return new User({
