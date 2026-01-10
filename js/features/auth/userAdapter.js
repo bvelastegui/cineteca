@@ -1,4 +1,4 @@
-import { User } from '/js/models/User.js';
+import { User } from './User.js';
 
 /**
  * Convierte un objeto de usuario de la API a una instancia de la clase User.
@@ -15,7 +15,7 @@ import { User } from '/js/models/User.js';
  */
 export const userAdapter = (tmdbAccountDetails) => {
   const avatarUrl = tmdbAccountDetails.avatar.tmdb.avatar_path !== null
-    ? `https://image.tmdb.org/t/p/w90/${tmdbAccountDetails.avatar.tmdb.avatar_path}`
+    ? `https://image.tmdb.org/t/p/original/${tmdbAccountDetails.avatar.tmdb.avatar_path}`
     : `https://www.gravatar.com/avatar/${tmdbAccountDetails.avatar.gravatar.hash}?d=mp&s=90`;
 
   return new User({

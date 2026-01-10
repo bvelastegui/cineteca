@@ -1,68 +1,113 @@
-import Auth from '/js/services/auth.js';
-import { redirect } from '/js/utils/helpers.js';
-import { HOME_URL } from '/js/config/constants.js';
-import { ui } from '/js/utils/ui.js';
+import Auth from '/js/features/auth/authService.js';
+import { redirect, ui } from '/js/lib/dom.js';
+import { HOME_URL } from '/js/shared/constants.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
-  if (Auth.check()) {
-    redirect(HOME_URL);
-    return;
+class LoginController {
+  constructor () {
+    // Registramos los elementos del DOM que utilizaremos
+    this.dom = {
+      /** @type {HTMLFormElement} */
+      form: document.querySelector('#form-login'),
+      /** @type {HTMLInputElement} */
+      inputApiKey: document.querySelector('#key'),
+      /** @type {HTMLElement} */
+      invalidFeedback: document.querySelector('#invalid-feedback'),
+    };
+
+    // Inicializamos el controlador
+    this.init()
+      .catch(console.error);
   }
 
-  const loginForm = document.querySelector('#form-login');
-  const inputApiKey = document.querySelector('#key');
-  const invalidFeedback = inputApiKey
-    .closest('.form-floating')
-    .querySelector('.invalid-feedback');
+  async init () {
+    // Verifica si ya está logueado
+    if (Auth.check()) {
+      return redirect(HOME_URL);
+    }
 
-  // Si existe el request_token en los parámetros de la url,
-  // validamos y creamos una sesión la cual será utilizada
-  // para el manejo de las listas.
-  const searchParams = new URLSearchParams(window.location.search);
-  if (searchParams.has('request_token') && searchParams.has('approved')) {
-    try {
-      await Auth.createSession();
-      await Auth.loadUserData();
-      redirect(HOME_URL);
-    } catch (error) {
-      console.error(error);
-      inputApiKey.classList.add('is-invalid');
-      invalidFeedback.innerText = 'No se pudo completar la autorización.';
+    // Verifica si volvemos de la redirección (OAuth flow)
+    await this.checkAuthReturn();
+
+    // Registra el evento al enviar el formulario
+    this.dom.form.addEventListener(
+      'submit',
+      (e) => this.handleFormSubmit(e),
+    );
+
+    // Ocultamos el loader que se activa por defecto
+    ui.showPageLoader(false);
+  }
+
+  /**
+   * Maneja el retorno del servicio de autenticación
+   */
+  async checkAuthReturn () {
+    const searchParams = new URLSearchParams(window.location.search);
+    const requestToken = searchParams.get('request_token');
+    const approved = searchParams.get('approved');
+
+    if (requestToken && approved === 'true') {
+      try {
+        ui.showPageLoader(true); // Bloquear UI mientras procesamos
+
+        await Auth.createSession();
+        await Auth.loadUserData();
+
+        redirect(HOME_URL);
+      } catch (error) {
+        console.error(error);
+        ui.showPageLoader(false); // Importante desbloquear si falla
+        this.showError(
+          'No se pudo completar la autorización. ' +
+          'Intenta nuevamente.',
+        );
+      }
     }
   }
 
-  loginForm.addEventListener('submit', async (e) => {
+  /**
+   * Maneja el envío del formulario (Inicio del flujo)
+   *
+   * @param {Event} e - Evento de envío del formulario
+   */
+  async handleFormSubmit (e) {
     e.preventDefault();
+    this.clearErrors();
 
-    const apiKey = inputApiKey.value.trim();
+    const apiKey = this.dom.inputApiKey.value.trim();
+
     if (apiKey.length === 0) {
-      inputApiKey.classList.add('is-invalid');
-      invalidFeedback.innerText = 'Este campo es obligatorio.';
-      return;
+      return this.showError('Este campo es obligatorio.');
     }
 
     try {
       ui.showPageLoader(true);
+
       await Auth.login(apiKey);
-    } catch (error) {
-      inputApiKey.classList.add('is-invalid');
-      invalidFeedback.innerText = 'El API KEY proporcionado es invalido.';
-    } finally {
-      ui.showPageLoader(false);
-    }
-
-    if (!Auth.apiKey) {
-      return;
-    }
-
-    try {
-      ui.showPageLoader(true);
       await Auth.requestAuthorization();
     } catch (error) {
-      inputApiKey.classList.add('is-invalid');
-      invalidFeedback.innerText = 'No se puede crear una sesión.';
+      console.error(error);
+      ui.showPageLoader(false);
+      this.showError(
+        'El API KEY proporcionado es inválido ' +
+        'o hubo un error de conexión.',
+      );
     }
-  });
+  }
 
-  ui.showPageLoader(false);
-});
+  /**
+   * @param {string} message
+   */
+  showError (message) {
+    this.dom.inputApiKey.classList.add('is-invalid');
+    this.dom.invalidFeedback.innerText = message;
+  }
+
+  clearErrors () {
+    this.dom.inputApiKey.classList.remove('is-invalid');
+    this.dom.invalidFeedback.innerText = '';
+  }
+}
+
+// Inicialización autoinvocada al cargar el DOM
+document.addEventListener('DOMContentLoaded', () => new LoginController());

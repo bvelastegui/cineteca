@@ -1,10 +1,10 @@
-import Auth from '/js/services/auth.js';
-import { ui } from '/js/utils/ui.js';
+import Auth from '/js/features/auth/authService.js';
+import { ui } from './dom.js';
 
 /**
  * Renderiza los datos del usuario en el DOM actualizando el contenido del nombre y avatar.
  *
- * @param {import('/js/models/User.js').User} user - Objeto que contiene los datos del usuario.
+ * @param {import('/js/features/auth/User.js').User} user - Objeto que contiene los datos del usuario.
  * @return {void} No retorna ningún valor.
  */
 export function renderUserData (user) {

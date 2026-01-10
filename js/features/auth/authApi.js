@@ -4,7 +4,8 @@ import {
   REQUEST_TOKEN_URL,
   SESSION_URL,
   USER_DETAILS_URL,
-} from '/js/config/constants.js';
+} from '/js/shared/constants.js';
+import { apiDelete, apiGet, apiPost } from '/js/shared/http.js';
 
 /**
  * @typedef {Object} Avatar
@@ -23,14 +24,6 @@ import {
  * @property {string} name - Nombre completo del usuario.
  */
 
-function getApiHeaders (apiKey) {
-  return new Headers({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${apiKey}`,
-    'Accept': 'application/json',
-  });
-}
-
 /**
  * Método para autenticar utilizando una API KEY.
  * Este método realiza una solicitud a un endpoint definido para validar la autenticación.
@@ -40,22 +33,8 @@ function getApiHeaders (apiKey) {
  * @return {Promise<void>} Una promesa que se resuelve si la autenticación es exitosa.
  *                          Lanza un error si la autenticación no es válida.
  */
-export async function authentication ({ apiKey }) {
-
-  const response = await fetch(
-    AUTHENTICATION_URL,
-    { headers: getApiHeaders(apiKey) },
-  );
-
-  if (!response.ok) {
-    throw new Error('API KEY invalida');
-  }
-
-  const data = await response.json();
-
-  if (!data.success) {
-    throw new Error('API KEY invalida');
-  }
+export async function authentication({ apiKey }) {
+  await apiGet(AUTHENTICATION_URL, apiKey, 'API KEY invalida');
 }
 
 /**
@@ -66,21 +45,8 @@ export async function authentication ({ apiKey }) {
  * @return {Promise<{ request_token: string }>} Una promesa que resuelve a un objeto con la respuesta de la API.
  * @throws {Error} Lanza un error si la autenticación falla o si la respuesta no contiene un token de solicitud.
  */
-export async function generateRequestToken ({ apiKey }) {
-  const response = await fetch(
-    REQUEST_TOKEN_URL,
-    { headers: getApiHeaders(apiKey) },
-  );
-
-  if (!response.ok) {
-    throw new Error('Authentication failed');
-  }
-
-  const data = await response.json();
-
-  if (!data.success) {
-    throw new Error('Authentication failed');
-  }
+export async function generateRequestToken({ apiKey }) {
+  const data = await apiGet(REQUEST_TOKEN_URL, apiKey, 'Authentication failed');
 
   if (!('request_token' in data)) {
     throw new Error('Authentication failed');
@@ -98,22 +64,13 @@ export async function generateRequestToken ({ apiKey }) {
  * @return {Promise<{ session_id: string }>} Retorna un objeto que contiene los datos de la sesión generada, incluyendo el identificador de sesión (`session_id`).
  * @throws {Error} Si la autenticación falla o si los datos de la sesión no son válidos.
  */
-export async function generateSession ({ requestToken, apiKey }) {
-  const response = await fetch(SESSION_URL, {
-    headers: getApiHeaders(apiKey),
-    method: 'POST',
-    body: JSON.stringify({ request_token: requestToken }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Authentication failed');
-  }
-
-  const data = await response.json();
-
-  if (!data.success) {
-    throw new Error('Authentication failed');
-  }
+export async function generateSession({ requestToken, apiKey }) {
+  const data = await apiPost(
+    SESSION_URL,
+    apiKey,
+    { request_token: requestToken },
+    'Authentication failed',
+  );
 
   if (!('session_id' in data)) {
     throw new Error('Authentication failed');
@@ -131,30 +88,20 @@ export async function generateSession ({ requestToken, apiKey }) {
  * @return {Promise<AccountDetails>} Una promesa que resuelve con un objeto que contiene los detalles de la cuenta de usuario.
  * @throws {Error} Lanza un error si la autenticación falla o si la respuesta no es exitosa.
  */
-export async function fetchAccountDetails ({ apiKey, sessionId }) {
-  const response = await fetch(
+export async function fetchAccountDetails({ apiKey, sessionId }) {
+  return await apiGet(
     `${USER_DETAILS_URL}?session_id=${sessionId}`,
-    {
-      headers: getApiHeaders(apiKey),
-    },
+    apiKey,
+    'Error al obtener los detalles del usuario.',
   );
-
-  if (!response.ok) {
-    throw new Error('Authentication failed');
-  }
-
-  return await response.json();
 }
 
-export async function deleteSession ({ apiKey, sessionId }) {
+export async function deleteSession({ apiKey, sessionId }) {
   try {
-    await fetch(
+    await apiDelete(
       DELETE_SESSION_URL,
-      {
-        headers: getApiHeaders(apiKey),
-        method: 'DELETE',
-        body: JSON.stringify({ session_id: sessionId }),
-      },
+      apiKey,
+      { session_id: sessionId },
     );
   } catch {
     // no se realiza nada en caso de error.
