@@ -4,14 +4,14 @@ import {
   fetchAccountDetails,
   generateRequestToken,
   generateSession,
-} from './authApi.js';
+} from '/js/features/auth/authApi.js';
 import { redirect } from '/js/lib/dom.js';
 import {
   LOGIN_URL,
   TMDB_AUTHORIZATION_BASE_URL,
 } from '/js/shared/constants.js';
-import { userAdapter } from './userAdapter.js';
-import { authStorage } from './authStorage.js';
+import { userAdapter } from '/js/features/auth/userAdapter.js';
+import { authStorage } from '/js/features/auth/authStorage.js';
 
 export default class Auth {
   static get apiKey() {
@@ -31,23 +31,17 @@ export default class Auth {
   }
 
   /**
-   * @type {import('./User.js').User}
+   * @type {import('./User.js').User|null}
    */
   static get user() {
-    const userData = authStorage.getUser();
-
-    if (!userData) {
-      return null;
-    }
-
-    return userAdapter(userData);
+    return authStorage.getUser();
   }
 
   /**
-   * @param {Object} details
+   * @param {import('/js/features/auth/authApi.js').AccountDetails} data
    */
-  static set user(details) {
-    authStorage.setUser(details);
+  static set user(data) {
+    authStorage.setUser(userAdapter(data));
   }
 
   /**

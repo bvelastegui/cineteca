@@ -1,17 +1,23 @@
+import { CacheService } from '/js/features/cache/cacheService.js';
+import { User } from '/js/features/auth/User.js';
+
 /**
  * Repository para manejar el almacenamiento de datos de autenticación.
  * Abstrae el acceso a localStorage, facilitando testing y cambios futuros.
  */
-
-const AUTH_CACHE_PREFIX = 'auth';
+const AUTH_CACHE_PREFIX = 'auth_';
 
 export class AuthStorage {
+  constructor() {
+    this.cache = new CacheService(AUTH_CACHE_PREFIX);
+  }
+
   /**
    * Obtiene la API Key almacenada.
    * @returns {string|null}
    */
   getApiKey () {
-    return localStorage.getItem(`${AUTH_CACHE_PREFIX}_key`);
+    return this.cache.get('api_key');
   }
 
   /**
@@ -19,7 +25,7 @@ export class AuthStorage {
    * @param {string} apiKey
    */
   setApiKey (apiKey) {
-    localStorage.setItem(`${AUTH_CACHE_PREFIX}_key`, apiKey);
+    this.cache.set(`api_key`, apiKey);
   }
 
   /**
@@ -27,7 +33,7 @@ export class AuthStorage {
    * @returns {string|null}
    */
   getSessionId () {
-    return localStorage.getItem(`${AUTH_CACHE_PREFIX}_session_id`);
+    return this.cache.get('session_id');
   }
 
   /**
@@ -35,16 +41,16 @@ export class AuthStorage {
    * @param {string} sessionId
    */
   setSessionId (sessionId) {
-    localStorage.setItem(`${AUTH_CACHE_PREFIX}_session_id`, sessionId);
+    this.cache.set('session_id', sessionId);
   }
 
   /**
    * Obtiene los datos del usuario almacenados.
-   * @returns {Object|null} Datos crudos del usuario o null si no existen.
+   * @returns {User|null} Datos crudos del usuario o null si no existen.
    */
   getUser () {
-    const userJson = localStorage.getItem(`${AUTH_CACHE_PREFIX}_user`);
-    return userJson ? JSON.parse(userJson) : null;
+    const data = this.cache.get('user');
+    return data ? new User(JSON.parse(data)) : null;
   }
 
   /**
@@ -52,16 +58,16 @@ export class AuthStorage {
    * @param {Object} userData - Datos del usuario (sin transformar).
    */
   setUser (userData) {
-    localStorage.setItem(`${AUTH_CACHE_PREFIX}_user`, JSON.stringify(userData));
+    this.cache.set('user', JSON.stringify(userData));
   }
 
   /**
    * Limpia todos los datos de autenticación del almacenamiento.
    */
   clear () {
-    localStorage.removeItem(`${AUTH_CACHE_PREFIX}_key`);
-    localStorage.removeItem(`${AUTH_CACHE_PREFIX}_session_id`);
-    localStorage.removeItem(`${AUTH_CACHE_PREFIX}_user`);
+    this.cache.remove('key');
+    this.cache.remove('session_id');
+    this.cache.remove('user');
   }
 }
 
