@@ -21,7 +21,7 @@ class LoginController {
 
   async init () {
     // Verifica si ya está logueado
-    if (Auth.check()) {
+    if (await Auth.check()) {
       return redirect(HOME_URL);
     }
 
@@ -51,8 +51,6 @@ class LoginController {
         ui.showPageLoader(true); // Bloquear UI mientras procesamos
 
         await Auth.createSession();
-        await Auth.loadUserData();
-
         redirect(HOME_URL);
       } catch (error) {
         console.error(error);

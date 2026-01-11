@@ -6,6 +6,7 @@ import {
   USER_DETAILS_URL,
 } from '/js/shared/constants.js';
 import { apiDelete, apiGet, apiPost } from '/js/shared/http.js';
+import { CacheService } from '/js/features/cache/cacheService.js';
 
 /**
  * @typedef {Object} Avatar
@@ -13,15 +14,14 @@ import { apiDelete, apiGet, apiPost } from '/js/shared/http.js';
  * @property {string} gravatar.hash
  * @property {Object} tmdb
  * @property {string|null} tmdb.avatar_path
- */
-
-/**
+ *
  * @typedef {Object} AccountDetails
  * @property {Avatar} avatar - Avatar del usuario.
  * @property {number} id - Id único del usuario.
  * @property {string} iso_639_1 - Idioma principal del usuario.
  * @property {string} iso_3366_1 - Regionalidad del usuario.
  * @property {string} name - Nombre completo del usuario.
+ * @property {string} username - Nombre completo del usuario.
  */
 
 /**
@@ -30,8 +30,7 @@ import { apiDelete, apiGet, apiPost } from '/js/shared/http.js';
  *
  * @param {Object} param - Objeto que contiene los parámetros necesarios.
  * @param {string} param.apiKey - La clave de API utilizada para la autenticación.
- * @return {Promise<void>} Una promesa que se resuelve si la autenticación es exitosa.
- *                          Lanza un error si la autenticación no es válida.
+ * @throws {Error} Lanza un error si la autenticación no es válida.
  */
 export async function authentication({ apiKey }) {
   await apiGet(AUTHENTICATION_URL, apiKey, 'API KEY invalida');
@@ -80,7 +79,7 @@ export async function generateSession({ requestToken, apiKey }) {
 }
 
 /**
- * Obtiene los detalles de una cuenta de usuario utilizando un API Key y un ID de sesión.
+ * Obtiene los detalles de una cuenta de usuario utilizando una API Key y un ID de sesión.
  *
  * @param {Object} params - Objeto que contiene los parámetros necesarios para la solicitud.
  * @param {string} params.apiKey - Clave de API proporcionada para autenticar la solicitud.
@@ -89,11 +88,20 @@ export async function generateSession({ requestToken, apiKey }) {
  * @throws {Error} Lanza un error si la autenticación falla o si la respuesta no es exitosa.
  */
 export async function fetchAccountDetails({ apiKey, sessionId }) {
-  return await apiGet(
-    `${USER_DETAILS_URL}?session_id=${sessionId}`,
-    apiKey,
-    'Error al obtener los detalles del usuario.',
-  );
+  const userCache = new CacheService('user_');
+  const cacheKey = `details_${sessionId}`;
+  let userData = userCache.get(cacheKey);
+
+  if (!userData) {
+    userData = await apiGet(
+      `${USER_DETAILS_URL}?session_id=${sessionId}`,
+      apiKey,
+      'Error al obtener los detalles del usuario.',
+    );
+    userCache.set(cacheKey, userData);
+  }
+
+  return userData;
 }
 
 export async function deleteSession({ apiKey, sessionId }) {
