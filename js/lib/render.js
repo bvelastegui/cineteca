@@ -1,5 +1,5 @@
 import Auth from '/js/features/auth/authService.js';
-import { ui } from './dom.js';
+import { ui } from '/js/lib/dom.js';
 
 /**
  * Renderiza los datos del usuario en el DOM actualizando el contenido del nombre y avatar.
@@ -13,7 +13,10 @@ export function renderUserData (user) {
 
   userNameElement.innerHTML = `
 <div class="d-inline-flex align-items-center">
-  ${user.name}
+  <div style="line-height: 1.2" class="d-flex flex-column align-items-end">
+    <span>${user.name}</span>
+    <small class="text-secondary">@${user.username}</small>
+  </div>
   <img
     src="${user.avatarUrl}"
     height="30"
