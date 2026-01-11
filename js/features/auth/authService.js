@@ -96,9 +96,24 @@ export default class Auth {
     });
   }
 
+  /**
+   * Verifica la existencia del api_key, el session_id
+   * y con estos datos obtiene la información del usuario
+   *
+   * @return {Promise<boolean>}
+   */
+  static async check() {
+    if (!this.apiKey || !this.sessionId) {
+      return false;
+    }
 
-  static check() {
-    return !!this.apiKey && !!this.sessionId && !!this.user;
+    try {
+      await this.loadUserData();
+    } catch {
+      return false;
+    }
+
+    return true;
   }
 
   static async logout() {
