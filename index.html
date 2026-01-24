@@ -14,6 +14,7 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"
   >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <style>
     :root {
       --bs-font-sans-serif: "Nunito", sans-serif;
@@ -21,6 +22,10 @@
 
     html, body {
       height: 100%;
+    }
+
+    .placeholder {
+      width: 20px;
     }
   </style>
   <noscript>
@@ -66,7 +71,17 @@
         </div>
       </a>
       <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
+        <form class="ms-auto d-flex" style="width: 250px" id="search-form">
+          <input
+            type="search"
+            name="q"
+            id="search-input"
+            class="form-control w-100"
+            placeholder="Buscar películas..."
+            aria-label="Buscar películas"
+          />
+        </form>
+        <ul class="navbar-nav ms-3 border-start px-2">
           <li class="nav-item dropdown">
             <a
               href="javascript:void(0)"
@@ -97,7 +112,38 @@
 </header>
 
 <main class="container">
-  <!--  @TODO: implementar dashboard -->
+  <aside>
+    <form class="d-flex align-items-center mt-4 pb-2 border-bottom">
+      <ul class="nav nav-underline">
+        <li class="nav-item">
+          <a href="" class="nav-link active" id="tab-top-rated" aria-current="page">Descubrir</a>
+        </li>
+      </ul>
+      <button class="ms-auto btn btn-primary d-flex align-items-center gap-2 lh-1" id="create-list">
+        Crear Lista
+        <i class="bi bi-plus" style="font-size: 1.5em"></i>
+      </button>
+    </form>
+  </aside>
+
+  <section
+    id="movies-section"
+    class="py-5 position-relative"
+  >
+    <div
+      id="movies-overlay"
+      class="position-absolute z-3 d-flex bg-body bg-opacity-75 top-0 start-0 end-0 bottom-0 align-items-center justify-content-center"
+    >
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div
+      id="movies-wrapper"
+      style="display: grid; gap: 32px 16px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"
+    >
+    </div>
+  </section>
 </main>
 
 <script

@@ -1,6 +1,8 @@
 export const LOGIN_URL = '/login.html';
 export const HOME_URL = '/index.html';
 export const TMDB_AUTHORIZATION_BASE_URL = 'https://www.themoviedb.org/authenticate';
+export const TMDB_IMG_BACKDROP_BASE_URL = 'https://image.tmdb.org/t/p/original';
+export const TMDB_IMG_POSTER_BASE_URL = 'https://image.tmdb.org/t/p/w342';
 
 /* API URL's */
 export const API_URL = 'https://api.themoviedb.org/3';
