@@ -98,11 +98,9 @@ export function renderizarPeliculas(peliculas, contenedor, listas = [], listaAct
     return;
   }
 
-  const html = peliculas
+  contenedor.innerHTML = peliculas
     .map(pelicula => generarHtmlPelicula(pelicula, listas, listaActualId))
     .join('');
-
-  contenedor.innerHTML = html;
 }
 
 /**

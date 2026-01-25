@@ -67,6 +67,7 @@ const dom = {
   listaNombre: null,
   listaDescripcion: null,
   btnGuardarLista: null,
+  textoBtnGuardarLista: null,
   spinnerGuardar: null,
   spinnerEliminar: null,
   // Contenedor de descripción de lista
@@ -122,6 +123,7 @@ async function inicializar() {
   dom.listaNombre = document.getElementById('lista-nombre');
   dom.listaDescripcion = document.getElementById('lista-descripcion-input');
   dom.btnGuardarLista = document.getElementById('btn-guardar-lista');
+  dom.textoBtnGuardarLista = document.getElementById('texto-btn-guardar-lista');
   dom.spinnerGuardar = document.getElementById('spinner-guardar');
   dom.spinnerEliminar = document.getElementById('spinner-eliminar');
 
@@ -781,7 +783,7 @@ function abrirModalCrearLista() {
 
   // Cambiar título
   document.getElementById('modalFormListaLabel').textContent = 'Crear Nueva Lista';
-  dom.btnGuardarLista.innerHTML = 'Crear Lista';
+  dom.textoBtnGuardarLista.textContent = 'Crear Lista';
 
   // Mostrar modal
   dom.modalFormLista.show();
@@ -799,7 +801,7 @@ function abrirModalEditarLista(lista) {
 
   // Cambiar título
   document.getElementById('modalFormListaLabel').textContent = 'Editar Lista';
-  dom.btnGuardarLista.innerHTML = 'Guardar Cambios';
+  dom.textoBtnGuardarLista.textContent = 'Guardar Cambios';
 
   // Mostrar modal
   dom.modalFormLista.show();
@@ -834,14 +836,14 @@ async function manejarSubmitFormLista(e) {
       await actualizarLista(apiKey, sessionId, id, nombre, descripcion);
 
       // Actualizar en estado y UI
-      const indice = estado.listas.findIndex(l => l.id == id);
+      const indice = estado.listas.findIndex(l => l.id === id);
       if (indice !== -1) {
         estado.listas[indice].nombre = nombre;
         estado.listas[indice].descripcion = descripcion;
       }
 
       // Si estamos viendo esta lista, actualizar descripción
-      if (estado.listaActual && estado.listaActual.id == id) {
+      if (estado.listaActual && estado.listaActual.id === id) {
         estado.listaActual.nombre = nombre;
         estado.listaActual.descripcion = descripcion;
         dom.listaTitulo.textContent = nombre;

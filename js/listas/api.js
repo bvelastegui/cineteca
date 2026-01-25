@@ -74,7 +74,7 @@ export async function actualizarLista(
   nombre,
   descripcion,
 ) {
-  const respuesta = await fetch(
+  return await fetch(
     `${URL_LISTA_V4}/${id}?session_id=${sessionId}`,
     {
       method: 'PUT',
@@ -82,7 +82,6 @@ export async function actualizarLista(
       body: JSON.stringify({ name: nombre, description: descripcion }),
     },
   );
-  return respuesta;
 }
 
 /**
@@ -93,14 +92,13 @@ export async function actualizarLista(
  * @return {Promise<Response>} - Respuesta del fetch
  */
 export async function eliminarLista(apiKey, sessionId, id) {
-  const respuesta = await fetch(
+  return await fetch(
     `${URL_LISTA_V4}/${id}?session_id=${sessionId}`,
     {
       method: 'DELETE',
       headers: obtenerHeadersApi(apiKey),
     },
   );
-  return respuesta;
 }
 
 /**
@@ -112,7 +110,7 @@ export async function eliminarLista(apiKey, sessionId, id) {
  * @return {Promise<Response>} - Respuesta del fetch
  */
 export async function agregarPeliculaALista(apiKey, sessionId, idLista, idPelicula) {
-  const respuesta = await fetch(
+  return await fetch(
     `${URL_LISTA_V4}/${idLista}/items?session_id=${sessionId}`,
     {
       method: 'POST',
@@ -127,7 +125,6 @@ export async function agregarPeliculaALista(apiKey, sessionId, idLista, idPelicu
       }),
     },
   );
-  return respuesta;
 }
 
 /**
@@ -139,7 +136,7 @@ export async function agregarPeliculaALista(apiKey, sessionId, idLista, idPelicu
  * @return {Promise<Response>} - Respuesta del fetch
  */
 export async function eliminarPeliculaDeLista(apiKey, sessionId, idLista, idPelicula) {
-  const respuesta = await fetch(
+  return await fetch(
     `${URL_LISTA_V4}/${idLista}/items?session_id=${sessionId}`,
     {
       method: 'DELETE',
@@ -154,5 +151,4 @@ export async function eliminarPeliculaDeLista(apiKey, sessionId, idLista, idPeli
       }),
     },
   );
-  return respuesta;
 }
