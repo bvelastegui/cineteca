@@ -3,18 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CineTeca - Proyecto Final</title>
+  
+  <!-- SEO Meta Tags -->
+  <title>CineTeca - Tu Biblioteca Personal de Películas | Gestiona tus Películas Favoritas</title>
+  <meta name="description" content="Descubre, organiza y gestiona tus películas favoritas con CineTeca. Crea listas personalizadas, busca películas en tiempo real y explora el catálogo completo de TMDB.">
+  <meta name="keywords" content="películas, movies, TMDB, listas de películas, biblioteca de películas, catálogo de películas, búsqueda de películas, gestión de películas, cineteca">
+  <meta name="author" content="Bryan Velastegui, Evelyn Morocho">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="Spanish">
+  <meta name="revisit-after" content="7 days">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cineteca.bvelastegui.dev/">
+  <meta property="og:title" content="CineTeca - Tu Biblioteca Personal de Películas">
+  <meta property="og:description" content="Descubre, organiza y gestiona tus películas favoritas con CineTeca. Crea listas personalizadas y explora el catálogo completo de TMDB.">
+  <meta property="og:image" content="https://cineteca.bvelastegui.dev/assets/img/landing/home.jpg">
+  <meta property="og:image:alt" content="Dashboard de CineTeca mostrando películas populares">
+  <meta property="og:site_name" content="CineTeca">
+  <meta property="og:locale" content="es_ES">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://cineteca.bvelastegui.dev/">
+  <meta name="twitter:title" content="CineTeca - Tu Biblioteca Personal de Películas">
+  <meta name="twitter:description" content="Descubre, organiza y gestiona tus películas favoritas con CineTeca. Crea listas personalizadas y explora el catálogo completo de TMDB.">
+  <meta name="twitter:image" content="https://cineteca.bvelastegui.dev/assets/img/landing/home.jpg">
+  <meta name="twitter:image:alt" content="Dashboard de CineTeca mostrando películas populares">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://cineteca.bvelastegui.dev/">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/img/logo.svg">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0d6efd">
+  <meta name="msapplication-TileColor" content="#0d6efd">
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
     rel="stylesheet"
   >
+  
+  <!-- Stylesheets -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"
   >
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  
+  <!-- Structured Data / JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CineTeca",
+    "description": "Biblioteca personal de películas que permite descubrir, organizar y gestionar películas favoritas con listas personalizadas",
+    "url": "https://cineteca.bvelastegui.dev/",
+    "applicationCategory": "Entertainment",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Bryan Velastegui",
+        "url": "https://github.com/bvelastegui"
+      },
+      {
+        "@type": "Person",
+        "name": "Evelyn Morocho",
+        "url": "https://github.com/evelyn18m"
+      }
+    ],
+    "screenshot": "https://cineteca.bvelastegui.dev/assets/img/landing/home.jpg",
+    "featureList": [
+      "Búsqueda avanzada de películas",
+      "Listas personalizadas",
+      "Autenticación segura",
+      "Sistema de caché inteligente",
+      "Películas populares",
+      "Gestión completa de listas"
+    ]
+  }
+  </script>
+  
   <style>
     :root {
       --bs-font-sans-serif: "Nunito", sans-serif;
@@ -24,256 +108,460 @@
       height: 100%;
     }
 
-    .placeholder {
-      width: 20px;
+    .hero-section {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(111, 66, 193, 0.1) 100%);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(13, 110, 253, 0.1);
+      border-radius: 4px;
+      margin: 0.25rem;
+    }
+
+    .cta-button {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(13, 110, 253, 0.4);
+    }
+
+    .screenshot-card {
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .screenshot-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .screenshot-card .screenshot-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .screenshot-card .screenshot-caption {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-screenshot {
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 3px solid rgba(255, 255, 255, 0.1);
     }
   </style>
-  <noscript>
-    <style>
-      main {
-        display: none;
-      }
-
-      noscript {
-        max-width: var(--bs-breakpoint-sm);
-        padding: 15px;
-      }
-    </style>
-  </noscript>
 </head>
 <body class="bg-body">
 
-<noscript class="w-100 m-auto">
-  <img class="mb-4" width="72" src="/assets/img/logo.svg" alt="">
-  <p class="h3 mb-3 fw-normal">
-    Lo sentimos, pero CineTeca no funciona correctamente sin JavaScript habilitado.
-  </p>
-  <p class="h3 fw-normal">Por favor, habilítalo para continuar.</p>
-</noscript>
-
-<div
-  id="overlay"
-  class="position-absolute z-3 d-flex bg-body bg-opacity-75 top-0 start-0 end-0 bottom-0 align-items-center justify-content-center"
->
-  <div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</div>
-
-<header>
-  <nav class="navbar navbar-expand bg-body-tertiary">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-        <img src="/assets/img/logo.svg" alt="Logo" width="30" class="d-inline-block align-text-top">
-        <div style="line-height: 1.2">
-          CineTeca
-          <div style="font-size: 50%" class="fw-bold text-body-tertiary text-uppercase">Tu biblioteca de películas</div>
-        </div>
-      </a>
-      <div class="collapse navbar-collapse">
-        <form class="ms-auto d-flex" style="width: 250px" id="search-form">
-          <input
-            type="search"
-            name="q"
-            id="search-input"
-            class="form-control w-100"
-            placeholder="Buscar películas..."
-            aria-label="Buscar películas"
-          />
-        </form>
-        <ul class="navbar-nav ms-3 border-start px-2">
-          <li class="nav-item dropdown">
-            <a
-              href="javascript:void(0)"
-              class="nav-link"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              id="user-name"
-            >
-              <div class="d-inline-flex align-items-center">
-                <span class="d-flex flex-column align-items-end">
-                  <span style="width: 150px" class="placeholder placeholder-wave"></span>
-                  <span style="width: 80px; margin-top: 2px" class="placeholder placeholder-wave"></span>
-                </span>
-                <span style="width: 30px; height: 30px" class="ms-2 placeholder placeholder-wave rounded-circle"></span>
-              </div>
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="javascript:void(0)" id="logout" class="dropdown-item">Cerrar sesión</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+<!-- Navegación -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <img src="/assets/img/logo.svg" alt="Logo" width="40">
+      <div style="line-height: 1.2">
+        <div class="fw-bold">CineTeca</div>
+        <div style="font-size: 60%" class="text-body-tertiary text-uppercase">Tu biblioteca de películas</div>
       </div>
-    </div>
-  </nav>
-</header>
-
-<main class="container">
-  <aside>
-    <form class="d-flex align-items-center mt-4 pb-2 border-bottom">
-      <ul class="nav nav-underline flex-grow-1" id="tabs-listas">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link active" id="tab-populares" data-tab="populares" aria-current="page">Populares</a>
+          <a class="nav-link" href="#caracteristicas">Características</a>
         </li>
-        <!-- Las listas se agregarán dinámicamente aquí -->
+        <li class="nav-item">
+          <a class="nav-link" href="#galeria">Galería</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#acerca">Acerca de</a>
+        </li>
+        <li class="nav-item ms-2">
+          <a class="btn btn-primary" href="/login.html">Iniciar Sesión</a>
+        </li>
       </ul>
-      <div class="ms-auto d-flex gap-2">
-        <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-2 lh-1" id="crear-lista">
-          Crear Lista
-          <i class="bi bi-plus" style="font-size: 1.5em"></i>
-        </button>
-      </div>
-    </form>
-  </aside>
-
-  <!-- Descripción de lista (solo visible cuando se selecciona una lista) -->
-  <div id="lista-descripcion-container" class="d-none mt-4">
-    <h5 id="lista-titulo" class="mb-2"></h5>
-    <p id="lista-descripcion" class="text-muted mb-2"></p>
-    <div class="d-flex gap-3">
-      <a href="#" id="btn-editar-lista-actual" class="text-decoration-none">
-        <i class="bi bi-pencil"></i> Editar lista
-      </a>
-      <a href="#" id="btn-eliminar-lista-actual" class="text-danger text-decoration-none">
-        <i class="bi bi-trash"></i> Eliminar lista
-      </a>
     </div>
   </div>
+</nav>
 
-  <section
-    id="movies-section"
-    class="py-5 position-relative"
-  >
-    <!-- Información de búsqueda -->
-    <div id="busqueda-info" class="d-none mb-4">
-      <h5 id="busqueda-titulo" class="mb-1"></h5>
-      <p id="busqueda-cantidad" class="text-muted mb-0"></p>
-    </div>
-
-    <div
-      id="movies-overlay"
-      class="position-absolute z-3 d-flex bg-body bg-opacity-75 top-0 start-0 end-0 bottom-0 align-items-center justify-content-center"
-    >
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <h1 class="display-3 fw-bold mb-4">
+          Tu Biblioteca Personal de Películas
+        </h1>
+        <p class="lead text-body-secondary mb-4">
+          Descubre, organiza y gestiona tus películas favoritas con CineTeca. 
+          Conecta con la API de TMDB y crea listas personalizadas de tus películas preferidas.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="/login.html" class="btn btn-primary cta-button">
+            Comenzar Ahora
+            <i class="bi bi-arrow-right ms-2"></i>
+          </a>
+          <a href="#caracteristicas" class="btn btn-outline-secondary cta-button">
+            Ver Características
+          </a>
+        </div>
       </div>
-    </div>
-    <div
-      id="movies-wrapper"
-      style="display: grid; gap: 32px 16px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"
-    >
-    </div>
-
-    <!-- Controles de paginación -->
-    <nav id="paginacion-container" class="d-none mt-5" aria-label="Navegación de páginas">
-      <ul class="pagination justify-content-center" id="paginacion-lista">
-        <!-- Los números de página se renderizarán dinámicamente aquí -->
-      </ul>
-    </nav>
-  </section>
-</main>
-
-<!-- Toast Container -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div
-    id="toast-notificacion"
-    class="toast align-items-center border-0"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-  >
-    <div class="d-flex">
-      <div class="toast-body" id="toast-mensaje">
-        <!-- Mensaje dinámico -->
+      <div class="col-lg-6">
+        <div class="text-center">
+          <img src="/assets/img/landing/home.jpg" alt="Dashboard de CineTeca" class="img-fluid hero-screenshot">
+        </div>
       </div>
-      <button
-        type="button"
-        class="btn-close btn-close-white me-2 m-auto"
-        data-bs-dismiss="toast"
-        aria-label="Cerrar"
-      ></button>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Modal: Crear/Editar Lista -->
-<div class="modal fade" id="modal-form-lista" tabindex="-1" aria-labelledby="modalFormListaLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalFormListaLabel">Crear Nueva Lista</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <form id="form-lista">
-        <div class="modal-body">
-          <input type="hidden" id="lista-id" value="">
-          <div class="mb-3">
-            <label for="lista-nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
-            <input
-              type="text"
-              class="form-control"
-              id="lista-nombre"
-              placeholder="Ej: Mis películas favoritas"
-              required
-            >
-          </div>
-          <div class="mb-3">
-            <label for="lista-descripcion-input" class="form-label">Descripción</label>
-            <textarea
-              class="form-control"
-              id="lista-descripcion-input"
-              rows="3"
-              placeholder="Descripción opcional de tu lista..."
-            ></textarea>
+<!-- Características Section -->
+<section id="caracteristicas" class="py-5 bg-body-tertiary">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold mb-3">Características Principales</h2>
+      <p class="lead text-body-secondary">Todo lo que necesitas para gestionar tu colección de películas</p>
+    </div>
+    
+    <div class="row g-4">
+      <!-- Característica 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card feature-card bg-body h-100 border-0 shadow-sm">
+          <div class="card-body p-4">
+            <div class="feature-icon bg-primary bg-opacity-10 text-primary">
+              <i class="bi bi-search"></i>
+            </div>
+            <h3 class="h4 mb-3">Búsqueda Avanzada</h3>
+            <p class="text-body-secondary mb-0">
+              Busca películas en tiempo real utilizando la API de TMDB. 
+              Encuentra cualquier película con búsqueda instantánea y resultados paginados.
+            </p>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary" id="btn-guardar-lista">
-            <span class="spinner-border spinner-border-sm d-none" id="spinner-guardar"></span>
-            Crear Lista
-          </button>
+      </div>
+
+      <!-- Característica 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card feature-card bg-body h-100 border-0 shadow-sm">
+          <div class="card-body p-4">
+            <div class="feature-icon bg-success bg-opacity-10 text-success">
+              <i class="bi bi-list-ul"></i>
+            </div>
+            <h3 class="h4 mb-3">Listas Personalizadas</h3>
+            <p class="text-body-secondary mb-0">
+              Crea y gestiona listas personalizadas de películas. 
+              Organiza tus favoritas, películas por ver, o cualquier categoría que imagines.
+            </p>
+          </div>
         </div>
-      </form>
+      </div>
+
+      <!-- Característica 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card feature-card bg-body h-100 border-0 shadow-sm">
+          <div class="card-body p-4">
+            <div class="feature-icon bg-warning bg-opacity-10 text-warning">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h3 class="h4 mb-3">Autenticación Segura</h3>
+            <p class="text-body-secondary mb-0">
+              Inicia sesión de forma segura con tu cuenta de TMDB. 
+              Tus datos están protegidos y seguros.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Característica 4 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card feature-card bg-body h-100 border-0 shadow-sm">
+          <div class="card-body p-4">
+            <div class="feature-icon bg-info bg-opacity-10 text-info">
+              <i class="bi bi-lightning-charge"></i>
+            </div>
+            <h3 class="h4 mb-3">Rendimiento Rápido</h3>
+            <p class="text-body-secondary mb-0">
+              Sistema de almacenamiento inteligente que optimiza las peticiones 
+              y mejora la velocidad de carga de la aplicación.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Característica 5 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card feature-card bg-body h-100 border-0 shadow-sm">
+          <div class="card-body p-4">
+            <div class="feature-icon bg-danger bg-opacity-10 text-danger">
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <h3 class="h4 mb-3">Películas Populares</h3>
+            <p class="text-body-secondary mb-0">
+              Descubre las películas más populares del momento. 
+              Explora tendencias y encuentra tu próxima película favorita.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Característica 6 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card feature-card bg-body h-100 border-0 shadow-sm">
+          <div class="card-body p-4">
+            <div class="feature-icon bg-secondary bg-opacity-10 text-secondary">
+              <i class="bi bi-pencil-square"></i>
+            </div>
+            <h3 class="h4 mb-3">Gestión Completa</h3>
+            <p class="text-body-secondary mb-0">
+              CRUD completo de listas: crea, edita, elimina y organiza. 
+              Agrega o quita películas de tus listas con un solo clic.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Screenshots Gallery Section -->
+<section id="galeria" class="py-5">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold mb-3">Explora la Aplicación</h2>
+      <p class="lead text-body-secondary">Descubre todas las funcionalidades de CineTeca en acción</p>
+    </div>
+    
+    <div class="row g-4">
+      <!-- Login -->
+      <div class="col-md-6 col-lg-4">
+        <div class="screenshot-card" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="/assets/img/landing/login.jpg" data-img-alt="Inicio de sesión con TMDB">
+          <img src="/assets/img/landing/login.jpg" alt="Inicio de sesión con TMDB" class="screenshot-img" loading="lazy">
+          <div class="p-3 bg-body-tertiary screenshot-caption">
+            <h5 class="mb-2">
+              <i class="bi bi-box-arrow-in-right text-primary me-2"></i>
+              Inicio de Sesión
+            </h5>
+            <p class="text-body-secondary small mb-0">
+              Acceso seguro con tu cuenta de TMDB
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="col-md-6 col-lg-4">
+        <div class="screenshot-card" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="/assets/img/landing/search.jpg" data-img-alt="Búsqueda de películas">
+          <img src="/assets/img/landing/search.jpg" alt="Búsqueda de películas" class="screenshot-img" loading="lazy">
+          <div class="p-3 bg-body-tertiary screenshot-caption">
+            <h5 class="mb-2">
+              <i class="bi bi-search text-success me-2"></i>
+              Búsqueda Avanzada
+            </h5>
+            <p class="text-body-secondary small mb-0">
+              Encuentra cualquier película al instante
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create List -->
+      <div class="col-md-6 col-lg-4">
+        <div class="screenshot-card" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="/assets/img/landing/create_list.jpg" data-img-alt="Crear lista de películas">
+          <img src="/assets/img/landing/create_list.jpg" alt="Crear lista de películas" class="screenshot-img" loading="lazy">
+          <div class="p-3 bg-body-tertiary screenshot-caption">
+            <h5 class="mb-2">
+              <i class="bi bi-plus-circle text-warning me-2"></i>
+              Crear Listas
+            </h5>
+            <p class="text-body-secondary small mb-0">
+              Organiza tus películas en listas personalizadas
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- List View -->
+      <div class="col-md-6 col-lg-4">
+        <div class="screenshot-card" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="/assets/img/landing/list.jpg" data-img-alt="Vista de lista de películas">
+          <img src="/assets/img/landing/list.jpg" alt="Vista de lista de películas" class="screenshot-img" loading="lazy">
+          <div class="p-3 bg-body-tertiary screenshot-caption">
+            <h5 class="mb-2">
+              <i class="bi bi-list-ul text-info me-2"></i>
+              Gestión de Listas
+            </h5>
+            <p class="text-body-secondary small mb-0">
+              Visualiza y administra tus colecciones
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit List -->
+      <div class="col-md-6 col-lg-4">
+        <div class="screenshot-card" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="/assets/img/landing/edit_list.jpg" data-img-alt="Editar lista de películas">
+          <img src="/assets/img/landing/edit_list.jpg" alt="Editar lista de películas" class="screenshot-img" loading="lazy">
+          <div class="p-3 bg-body-tertiary screenshot-caption">
+            <h5 class="mb-2">
+              <i class="bi bi-pencil-square text-danger me-2"></i>
+              Editar Listas
+            </h5>
+            <p class="text-body-secondary small mb-0">
+              Modifica nombre y descripción fácilmente
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Movie to List -->
+      <div class="col-md-6 col-lg-4">
+        <div class="screenshot-card" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="/assets/img/landing/add_movie_to_list.jpg" data-img-alt="Agregar película a lista">
+          <img src="/assets/img/landing/add_movie_to_list.jpg" alt="Agregar película a lista" class="screenshot-img" loading="lazy">
+          <div class="p-3 bg-body-tertiary screenshot-caption">
+            <h5 class="mb-2">
+              <i class="bi bi-plus-square text-secondary me-2"></i>
+              Agregar Películas
+            </h5>
+            <p class="text-body-secondary small mb-0">
+              Añade películas a tus listas con un clic
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="/login.html" class="btn btn-primary btn-lg cta-button">
+        <i class="bi bi-rocket-takeoff me-2"></i>
+        Probar CineTeca Ahora
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Acerca de Section -->
+<section id="acerca" class="py-5 bg-body-tertiary">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="display-5 fw-bold mb-4">Acerca de CineTeca</h2>
+        <p class="lead text-body-secondary mb-4">
+          CineTeca es un proyecto académico desarrollado como parte del curso de Desarrollo de Software. 
+          La aplicación permite explorar películas, crear listas personalizadas y gestionar tu colección 
+          de películas favoritas de manera sencilla e intuitiva.
+        </p>
+        <p class="text-body-secondary mb-5">
+          Conecta con la base de datos de películas más grande del mundo (TMDB) para acceder a información 
+          actualizada sobre miles de películas, desde clásicos hasta los últimos estrenos.
+        </p>
+        
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="https://github.com/bvelastegui/cineteca" class="btn btn-outline-primary btn-lg" target="_blank" rel="noopener">
+            <i class="bi bi-github me-2"></i>
+            Ver en GitHub
+          </a>
+          <a href="/login.html" class="btn btn-primary btn-lg">
+            <i class="bi bi-box-arrow-in-right me-2"></i>
+            Iniciar Sesión
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 bg-body-tertiary border-top">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+        <img src="/assets/img/logo.svg" alt="Logo" width="30" class="me-2">
+        <span class="text-body-secondary">CineTeca &copy; 2026 - Proyecto Académico</span>
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        <span class="text-body-secondary">Desarrollado con</span>
+        <i class="bi bi-heart-fill text-danger mx-1"></i>
+        <span class="text-body-secondary">usando Vanilla JavaScript</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal para ver imagen en tamaño original -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body p-0 text-center">
+        <img id="modalImage" src="" alt="" class="img-fluid" style="border-radius: 4px;">
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Modal: Confirmación de Eliminación -->
-<div
-  class="modal fade"
-  id="modal-confirmar-eliminar"
-  tabindex="-1"
-  aria-labelledby="modalConfirmarEliminarLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalConfirmarEliminarLabel">Confirmar Eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <p id="mensaje-confirmar-eliminar">¿Estás seguro que deseas eliminar esta lista?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="btn-confirmar-eliminar">
-          <span class="spinner-border spinner-border-sm d-none" id="spinner-eliminar"></span>
-          Eliminar
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<script>
+  // Actualizar imagen del modal cuando se abre
+  const imageModal = document.getElementById('imageModal');
+  imageModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const imgSrc = button.getAttribute('data-img-src');
+    const imgAlt = button.getAttribute('data-img-alt');
+    
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = imgSrc;
+    modalImage.alt = imgAlt;
+  });
+</script>
 
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
 ></script>
-<script type="module" src="/js/peliculas/peliculas.js"></script>
 </body>
 </html>

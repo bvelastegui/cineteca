@@ -1,0 +1,76 @@
+{
+  "name": "CineTeca - Tu Biblioteca Personal de Películas",
+  "short_name": "CineTeca",
+  "description": "Descubre, organiza y gestiona tus películas favoritas con CineTeca. Crea listas personalizadas y explora el catálogo completo de TMDB.",
+  "start_url": "https://cineteca.bvelastegui.dev/",
+  "display": "standalone",
+  "background_color": "#212529",
+  "theme_color": "#0d6efd",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "es",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/assets/img/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "entertainment",
+    "lifestyle"
+  ],
+  "screenshots": [
+    {
+      "src": "https://cineteca.bvelastegui.dev/assets/img/landing/home.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Dashboard principal con películas populares"
+    },
+    {
+      "src": "https://cineteca.bvelastegui.dev/assets/img/landing/search.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "label": "Búsqueda avanzada de películas"
+    },
+    {
+      "src": "https://cineteca.bvelastegui.dev/assets/img/landing/list.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "label": "Gestión de listas personalizadas"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buscar Películas",
+      "short_name": "Buscar",
+      "description": "Buscar películas en el catálogo",
+      "url": "/home.html#buscar",
+      "icons": [
+        {
+          "src": "/assets/img/logo.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Mis Listas",
+      "short_name": "Listas",
+      "description": "Ver mis listas personalizadas",
+      "url": "/home.html#listas",
+      "icons": [
+        {
+          "src": "/assets/img/logo.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
