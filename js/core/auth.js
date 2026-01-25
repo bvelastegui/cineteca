@@ -12,13 +12,9 @@ import {
   obtenerDetallesCuenta,
 } from '/js/autenticacion/api.js';
 import { redirigir } from '/js/core/dom.js';
-import { URL_LOGIN, URL_BASE_AUTORIZACION_TMDB } from '/js/constantes.js';
+import { URL_BASE_AUTORIZACION_TMDB, URL_LOGIN } from '/js/constantes.js';
 import { normalizarUsuario } from '/js/autenticacion/normalizador.js';
-import {
-  eliminarDatoCache,
-  guardarDatoCache,
-  obtenerDatoCache,
-} from '/js/core/cache.js';
+import { guardarDatoCache, obtenerDatoCache } from '/js/core/cache.js';
 
 const PREFIJO_AUTH = 'auth_';
 

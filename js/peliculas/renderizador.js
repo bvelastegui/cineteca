@@ -14,7 +14,7 @@ export function generarHtmlPelicula(pelicula, listas = [], listaActualId = null)
   // Si estamos en una lista, mostrar botón de eliminar
   // Si no, mostrar dropdown para agregar a listas
   let accionHtml;
-  
+
   if (listaActualId !== null) {
     // Botón para eliminar de la lista actual
     accionHtml = `
@@ -34,7 +34,7 @@ export function generarHtmlPelicula(pelicula, listas = [], listaActualId = null)
           </a>
         `).join('')
       : '<span class="dropdown-item text-muted disabled">No tienes listas</span>';
-    
+
     accionHtml = `
       <div class="ms-auto dropdown dropup">
         <a href="javascript:void(0)" data-bs-toggle="dropdown" class="link-body-emphasis icon-link">

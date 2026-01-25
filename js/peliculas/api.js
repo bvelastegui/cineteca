@@ -5,11 +5,7 @@
 
 import { apiGet } from '/js/core/http.js';
 import { guardarDatoCache, obtenerDatoCache } from '/js/core/cache.js';
-import {
-  URL_BUSCAR_PELICULAS,
-  URL_GENEROS_PELICULAS,
-  URL_PELICULAS_POPULARES,
-} from '/js/constantes.js';
+import { URL_BUSCAR_PELICULAS, URL_GENEROS_PELICULAS, URL_PELICULAS_POPULARES } from '/js/constantes.js';
 
 const PREFIJO_CACHE = 'movies_';
 

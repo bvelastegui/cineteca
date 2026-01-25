@@ -3,37 +3,21 @@
  * Orquesta la carga de películas, búsqueda y manejo de eventos.
  */
 
-import {
-  cerrarSesion,
-  obtenerApiKey,
-  obtenerSessionId,
-  obtenerUsuario,
-  verificarAuth,
-} from '/js/core/auth.js';
+import { cerrarSesion, obtenerApiKey, obtenerSessionId, obtenerUsuario, verificarAuth } from '/js/core/auth.js';
 import { URL_LOGIN } from '/js/constantes.js';
 import { redirigir, ui } from '/js/core/dom.js';
 import { renderizarDatosUsuario } from '/js/core/renderizador.js';
+import { obtenerCategorias, obtenerPeliculas, obtenerPeliculasPorBusqueda } from '/js/peliculas/api.js';
+import { normalizarCategorias, normalizarPeliculas } from '/js/peliculas/normalizador.js';
+import { mostrarCargador, renderizarPeliculas } from '/js/peliculas/renderizador.js';
 import {
-  obtenerCategorias,
-  obtenerPeliculas,
-  obtenerPeliculasPorBusqueda,
-} from '/js/peliculas/api.js';
-import {
-  normalizarCategorias,
-  normalizarPeliculas,
-} from '/js/peliculas/normalizador.js';
-import {
-  mostrarCargador,
-  renderizarPeliculas,
-} from '/js/peliculas/renderizador.js';
-import {
-  obtenerListas,
-  obtenerDetallesLista,
-  crearLista,
   actualizarLista,
-  eliminarLista,
   agregarPeliculaALista,
+  crearLista,
+  eliminarLista,
   eliminarPeliculaDeLista,
+  obtenerDetallesLista,
+  obtenerListas,
 } from '/js/listas/api.js';
 import { normalizarListas } from '/js/listas/normalizador.js';
 
@@ -54,7 +38,7 @@ const estado = {
   },
 };
 
-  // Referencias al DOM
+// Referencias al DOM
 const dom = {
   searchInput: null,
   moviesWrapper: null,
@@ -108,30 +92,30 @@ async function inicializar() {
   dom.searchInput = document.querySelector('#search-input');
   dom.moviesWrapper = document.querySelector('#movies-wrapper');
   dom.moviesOverlay = document.querySelector('#movies-overlay');
-  
+
   // Referencias de información de búsqueda
   dom.busquedaInfo = document.getElementById('busqueda-info');
   dom.busquedaTitulo = document.getElementById('busqueda-titulo');
   dom.busquedaCantidad = document.getElementById('busqueda-cantidad');
-  
+
   // Referencias de paginación
   dom.paginacionContainer = document.getElementById('paginacion-container');
   dom.paginacionLista = document.getElementById('paginacion-lista');
-  
+
   // Referencias a tabs
   dom.tabsListas = document.getElementById('tabs-listas');
   dom.tabPopulares = document.getElementById('tab-populares');
-  
+
   // Referencias a modales
   dom.modalFormLista = new bootstrap.Modal(document.getElementById('modal-form-lista'));
   dom.modalConfirmarEliminar = new bootstrap.Modal(document.getElementById('modal-confirmar-eliminar'));
-  
+
   // Referencias a botones
   dom.btnCrearLista = document.getElementById('crear-lista');
   dom.btnEditarListaActual = document.getElementById('btn-editar-lista-actual');
   dom.btnEliminarListaActual = document.getElementById('btn-eliminar-lista-actual');
   dom.btnConfirmarEliminar = document.getElementById('btn-confirmar-eliminar');
-  
+
   // Referencias al formulario
   dom.formLista = document.getElementById('form-lista');
   dom.listaId = document.getElementById('lista-id');
@@ -140,7 +124,7 @@ async function inicializar() {
   dom.btnGuardarLista = document.getElementById('btn-guardar-lista');
   dom.spinnerGuardar = document.getElementById('spinner-guardar');
   dom.spinnerEliminar = document.getElementById('spinner-eliminar');
-  
+
   // Referencias a contenedor de descripción
   dom.listaDescripcionContainer = document.getElementById('lista-descripcion-container');
   dom.listaTitulo = document.getElementById('lista-titulo');
@@ -179,13 +163,13 @@ function configurarEventos() {
   if (logoutButton) {
     logoutButton.addEventListener('click', manejarLogout);
   }
-  
+
   // Tab Populares
   dom.tabPopulares.addEventListener('click', (e) => {
     e.preventDefault();
     cambiarTab('populares');
   });
-  
+
   // Listas
   dom.btnCrearLista.addEventListener('click', abrirModalCrearLista);
   dom.btnEditarListaActual.addEventListener('click', (e) => {
@@ -224,7 +208,7 @@ async function cargarCategorias() {
 async function cargarPeliculasPopulares(pagina = 1) {
   try {
     mostrarCargador(dom.moviesOverlay, true);
-    
+
     // Limpiar búsqueda y lista actual en estado
     estado.busqueda = '';
     estado.listaActual = null;
@@ -239,24 +223,24 @@ async function cargarPeliculasPopulares(pagina = 1) {
       datosPeliculas.results,
       estado.categorias,
     );
-    
+
     // Actualizar información de paginación
     estado.paginacion.paginaActual = datosPeliculas.page;
     estado.paginacion.totalPaginas = datosPeliculas.total_pages;
     estado.paginacion.totalResultados = datosPeliculas.total_results;
-    
+
     // Ocultar información de búsqueda
     ocultarInfoBusqueda();
-    
+
     // Mostrar/actualizar paginación
     actualizarPaginacion();
 
     // Cargar en el DOM (Load)
     renderizarPeliculas(estado.peliculas, dom.moviesWrapper, estado.listas);
-    
+
     // Configurar event listeners de películas
     configurarEventosPeliculas();
-    
+
     // Scroll al inicio de la sección si no es la primera página
     if (pagina > 1) {
       document.getElementById('movies-section').scrollIntoView({ behavior: 'smooth' });
@@ -287,10 +271,10 @@ async function buscarPeliculas(pagina = 1) {
       await cargarPeliculasPopulares();
       return;
     }
-    
+
     // Limpiar lista actual (estamos en búsqueda, no en una lista)
     estado.listaActual = null;
-    
+
     // Guardar consulta en estado
     estado.busqueda = consulta;
 
@@ -302,24 +286,24 @@ async function buscarPeliculas(pagina = 1) {
       datosPeliculas.results,
       estado.categorias,
     );
-    
+
     // Actualizar información de paginación
     estado.paginacion.paginaActual = datosPeliculas.page;
     estado.paginacion.totalPaginas = datosPeliculas.total_pages;
     estado.paginacion.totalResultados = datosPeliculas.total_results;
-    
+
     // Mostrar información de búsqueda con total_results
     mostrarInfoBusqueda(consulta, estado.paginacion.totalResultados);
-    
+
     // Mostrar/actualizar paginación
     actualizarPaginacion();
 
     // Cargar en el DOM (Load)
     renderizarPeliculas(estado.peliculas, dom.moviesWrapper, estado.listas);
-    
+
     // Configurar event listeners de películas
     configurarEventosPeliculas();
-    
+
     // Scroll al inicio de la sección
     document.getElementById('movies-section').scrollIntoView({ behavior: 'smooth' });
   } catch (error) {
@@ -337,14 +321,14 @@ async function buscarPeliculas(pagina = 1) {
  */
 function mostrarInfoBusqueda(consulta, cantidad) {
   dom.busquedaTitulo.textContent = `Resultados de búsqueda para "${consulta}"`;
-  
+
   // Construir texto con información de página si hay paginación
   let textoInfo = `${cantidad} película${cantidad !== 1 ? 's' : ''} encontrada${cantidad !== 1 ? 's' : ''}`;
-  
+
   if (estado.paginacion.totalPaginas > 1) {
     textoInfo += ` - Página ${estado.paginacion.paginaActual} de ${estado.paginacion.totalPaginas}`;
   }
-  
+
   dom.busquedaCantidad.textContent = textoInfo;
   dom.busquedaInfo.classList.remove('d-none');
 }
@@ -362,18 +346,18 @@ function ocultarInfoBusqueda() {
 function actualizarPaginacion() {
   const paginaActual = estado.paginacion.paginaActual;
   const totalPaginas = estado.paginacion.totalPaginas;
-  
+
   // Mostrar paginación solo si hay más de 1 página
   if (totalPaginas <= 1) {
     dom.paginacionContainer.classList.add('d-none');
     return;
   }
-  
+
   dom.paginacionContainer.classList.remove('d-none');
-  
+
   // Generar HTML de paginación
   let html = '';
-  
+
   // Botón Anterior
   const anteriorDisabled = paginaActual <= 1 ? 'disabled' : '';
   html += `
@@ -383,10 +367,10 @@ function actualizarPaginacion() {
       </a>
     </li>
   `;
-  
+
   // Generar números de página
   const paginasAMostrar = generarRangoPaginas(paginaActual, totalPaginas);
-  
+
   paginasAMostrar.forEach(pagina => {
     if (pagina === '...') {
       // Puntos suspensivos (no clickeable)
@@ -405,7 +389,7 @@ function actualizarPaginacion() {
       `;
     }
   });
-  
+
   // Botón Siguiente
   const siguienteDisabled = paginaActual >= totalPaginas ? 'disabled' : '';
   html += `
@@ -415,10 +399,10 @@ function actualizarPaginacion() {
       </a>
     </li>
   `;
-  
+
   // Renderizar
   dom.paginacionLista.innerHTML = html;
-  
+
   // Configurar event listeners
   configurarEventosPaginacion();
 }
@@ -433,7 +417,7 @@ function actualizarPaginacion() {
 function generarRangoPaginas(paginaActual, totalPaginas) {
   const paginas = [];
   const delta = 2; // Número de páginas a mostrar a cada lado de la actual
-  
+
   // Si hay pocas páginas, mostrar todas
   if (totalPaginas <= 7) {
     for (let i = 1; i <= totalPaginas; i++) {
@@ -441,32 +425,32 @@ function generarRangoPaginas(paginaActual, totalPaginas) {
     }
     return paginas;
   }
-  
+
   // Siempre mostrar primera página
   paginas.push(1);
-  
+
   // Calcular rango alrededor de página actual
   const inicio = Math.max(2, paginaActual - delta);
   const fin = Math.min(totalPaginas - 1, paginaActual + delta);
-  
+
   // Agregar "..." si hay gap después de la primera página
   if (inicio > 2) {
     paginas.push('...');
   }
-  
+
   // Agregar páginas del rango
   for (let i = inicio; i <= fin; i++) {
     paginas.push(i);
   }
-  
+
   // Agregar "..." si hay gap antes de la última página
   if (fin < totalPaginas - 1) {
     paginas.push('...');
   }
-  
+
   // Siempre mostrar última página
   paginas.push(totalPaginas);
-  
+
   return paginas;
 }
 
@@ -477,9 +461,9 @@ function configurarEventosPaginacion() {
   dom.paginacionLista.querySelectorAll('.page-link').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      
+
       const pagina = parseInt(link.dataset.pagina);
-      
+
       // Verificar que sea un número válido
       if (!isNaN(pagina) && pagina >= 1 && pagina <= estado.paginacion.totalPaginas) {
         irAPagina(pagina);
@@ -549,7 +533,7 @@ function configurarEventosPeliculas() {
       await agregarPeliculaAListaHandler(peliculaId, listaId);
     });
   });
-  
+
   // Botones "Eliminar de lista"
   document.querySelectorAll('.eliminar-de-lista').forEach(btn => {
     btn.addEventListener('click', async (e) => {
@@ -559,7 +543,7 @@ function configurarEventosPeliculas() {
       await eliminarPeliculaDeListaHandler(peliculaId, listaId);
     });
   });
-  
+
   // Botones "Crear lista desde película"
   document.querySelectorAll('.crear-lista-desde-pelicula').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -578,14 +562,14 @@ async function agregarPeliculaAListaHandler(peliculaId, listaId) {
   try {
     const apiKey = obtenerApiKey();
     const sessionId = obtenerSessionId();
-    
+
     // Obtener nombre de la lista para el mensaje
     const lista = estado.listas.find(l => l.id === listaId);
     const nombreLista = lista ? lista.nombre : 'la lista';
-    
+
     const respuesta = await agregarPeliculaALista(apiKey, sessionId, listaId, peliculaId);
     const datos = await respuesta.json();
-    
+
     // Verificar si la película ya existe en la lista
     if (datos.results && datos.results[0] && !datos.results[0].success) {
       const error = datos.results[0].error;
@@ -594,14 +578,14 @@ async function agregarPeliculaAListaHandler(peliculaId, listaId) {
         return;
       }
     }
-    
+
     if (!respuesta.ok) {
       ui.mostrarToast('Error al agregar la película. Por favor, intenta de nuevo.', 'error');
       return;
     }
-    
+
     ui.mostrarToast(`Película agregada a "${nombreLista}"`, 'success');
-    
+
     // Si estamos viendo esta lista, recargar para mostrar la nueva película
     if (estado.listaActual && estado.listaActual.id === listaId) {
       await cargarDetallesLista(listaId);
@@ -621,15 +605,15 @@ async function eliminarPeliculaDeListaHandler(peliculaId, listaId) {
   try {
     const apiKey = obtenerApiKey();
     const sessionId = obtenerSessionId();
-    
+
     // Obtener nombre de la lista para el mensaje
     const lista = estado.listas.find(l => l.id === listaId);
     const nombreLista = lista ? lista.nombre : 'la lista';
-    
+
     await eliminarPeliculaDeLista(apiKey, sessionId, listaId, peliculaId);
-    
+
     ui.mostrarToast(`Película eliminada de "${nombreLista}"`, 'success');
-    
+
     // Recargar la lista para actualizar la vista
     if (estado.listaActual && estado.listaActual.id === listaId) {
       await cargarDetallesLista(listaId);
@@ -652,13 +636,13 @@ async function cargarListasUsuario() {
   try {
     const apiKey = obtenerApiKey();
     const usuario = obtenerUsuario();
-    
+
     // Obtener datos de la API (Extract)
     const datosListas = await obtenerListas(apiKey, usuario.id);
-    
+
     // Transformar datos a español (Transform)
     estado.listas = normalizarListas(datosListas.results);
-    
+
     // Renderizar tabs (Load)
     renderizarTabsListas();
   } catch (error) {
@@ -673,12 +657,12 @@ function renderizarTabsListas() {
   // Limpiar tabs existentes (excepto Descubrir)
   const tabsExistentes = dom.tabsListas.querySelectorAll('.nav-item:not(:first-child)');
   tabsExistentes.forEach(tab => tab.remove());
-  
+
   // Agregar tab por cada lista
   estado.listas.forEach(lista => {
     const li = document.createElement('li');
     li.className = 'nav-item';
-    
+
     const a = document.createElement('a');
     a.href = '#';
     a.className = 'nav-link';
@@ -688,7 +672,7 @@ function renderizarTabsListas() {
       e.preventDefault();
       cambiarTab(lista.id);
     });
-    
+
     li.appendChild(a);
     dom.tabsListas.appendChild(li);
   });
@@ -701,30 +685,30 @@ function renderizarTabsListas() {
 async function cambiarTab(tabId) {
   // Actualizar estado
   estado.tabActual = tabId;
-  
+
   // Limpiar búsqueda y ocultar información
   dom.searchInput.value = '';
   estado.busqueda = '';
   ocultarInfoBusqueda();
   ocultarPaginacion();
-  
+
   // Actualizar clases activas en tabs
   dom.tabsListas.querySelectorAll('.nav-link').forEach(link => {
     link.classList.remove('active');
     link.removeAttribute('aria-current');
   });
-  
+
   if (tabId === 'populares') {
     // Limpiar lista actual
     estado.listaActual = null;
-    
+
     // Activar tab Populares
     dom.tabPopulares.classList.add('active');
     dom.tabPopulares.setAttribute('aria-current', 'page');
-    
+
     // Ocultar descripción de lista
     dom.listaDescripcionContainer.classList.add('d-none');
-    
+
     // Cargar películas populares
     await cargarPeliculasPopulares();
   } else {
@@ -734,7 +718,7 @@ async function cambiarTab(tabId) {
       tabLink.classList.add('active');
       tabLink.setAttribute('aria-current', 'page');
     }
-    
+
     // Cargar detalles de la lista
     await cargarDetallesLista(tabId);
   }
@@ -747,16 +731,16 @@ async function cambiarTab(tabId) {
 async function cargarDetallesLista(idLista) {
   try {
     mostrarCargador(dom.moviesOverlay, true);
-    
+
     // Ocultar información de búsqueda y paginación
     ocultarInfoBusqueda();
     ocultarPaginacion();
-    
+
     const apiKey = obtenerApiKey();
-    
+
     // Obtener datos de la API (Extract)
     const datosLista = await obtenerDetallesLista(apiKey, idLista);
-    
+
     // Guardar lista actual en estado
     estado.listaActual = {
       id: datosLista.id,
@@ -764,19 +748,19 @@ async function cargarDetallesLista(idLista) {
       descripcion: datosLista.description || '',
       cantidadItems: datosLista.item_count || 0,
     };
-    
+
     // Transformar películas a español (Transform)
     const peliculasLista = datosLista.items || [];
     estado.peliculas = normalizarPeliculas(peliculasLista, estado.categorias);
-    
+
     // Mostrar descripción de lista (Load)
     dom.listaTitulo.textContent = estado.listaActual.nombre;
     dom.listaDescripcionTexto.textContent = estado.listaActual.descripcion || 'Sin descripción';
     dom.listaDescripcionContainer.classList.remove('d-none');
-    
+
     // Renderizar películas (Load) - pasar ID de lista para mostrar botón de eliminar
     renderizarPeliculas(estado.peliculas, dom.moviesWrapper, estado.listas, estado.listaActual.id);
-    
+
     // Configurar event listeners de películas
     configurarEventosPeliculas();
   } catch (error) {
@@ -794,11 +778,11 @@ function abrirModalCrearLista() {
   // Limpiar formulario
   dom.formLista.reset();
   dom.listaId.value = '';
-  
+
   // Cambiar título
   document.getElementById('modalFormListaLabel').textContent = 'Crear Nueva Lista';
   dom.btnGuardarLista.innerHTML = 'Crear Lista';
-  
+
   // Mostrar modal
   dom.modalFormLista.show();
 }
@@ -812,11 +796,11 @@ function abrirModalEditarLista(lista) {
   dom.listaId.value = lista.id;
   dom.listaNombre.value = lista.nombre;
   dom.listaDescripcion.value = lista.descripcion || '';
-  
+
   // Cambiar título
   document.getElementById('modalFormListaLabel').textContent = 'Editar Lista';
   dom.btnGuardarLista.innerHTML = 'Guardar Cambios';
-  
+
   // Mostrar modal
   dom.modalFormLista.show();
 }
@@ -827,35 +811,35 @@ function abrirModalEditarLista(lista) {
  */
 async function manejarSubmitFormLista(e) {
   e.preventDefault();
-  
+
   const nombre = dom.listaNombre.value.trim();
   const descripcion = dom.listaDescripcion.value.trim();
   const id = dom.listaId.value;
-  
+
   if (nombre.length === 0) {
     ui.mostrarToast('El nombre de la lista es obligatorio.', 'warning');
     return;
   }
-  
+
   try {
     // Mostrar spinner
     dom.spinnerGuardar.classList.remove('d-none');
     dom.btnGuardarLista.disabled = true;
-    
+
     const apiKey = obtenerApiKey();
     const sessionId = obtenerSessionId();
-    
+
     if (id) {
       // Actualizar lista existente
       await actualizarLista(apiKey, sessionId, id, nombre, descripcion);
-      
+
       // Actualizar en estado y UI
       const indice = estado.listas.findIndex(l => l.id == id);
       if (indice !== -1) {
         estado.listas[indice].nombre = nombre;
         estado.listas[indice].descripcion = descripcion;
       }
-      
+
       // Si estamos viendo esta lista, actualizar descripción
       if (estado.listaActual && estado.listaActual.id == id) {
         estado.listaActual.nombre = nombre;
@@ -866,7 +850,7 @@ async function manejarSubmitFormLista(e) {
     } else {
       // Crear nueva lista
       const resultado = await crearLista(apiKey, sessionId, nombre, descripcion, 'es-EC');
-      
+
       // Agregar a estado
       const nuevaLista = {
         id: resultado.list_id,
@@ -876,16 +860,16 @@ async function manejarSubmitFormLista(e) {
       };
       estado.listas.push(nuevaLista);
     }
-    
+
     // Cerrar modal
     dom.modalFormLista.hide();
-    
+
     // Actualizar tabs
     renderizarTabsListas();
-    
+
     // Mostrar mensaje de éxito
     ui.mostrarToast(id ? 'Lista actualizada exitosamente' : 'Lista creada exitosamente', 'success');
-    
+
   } catch (error) {
     console.error('Error al guardar lista:', error);
     ui.mostrarToast('Error al guardar la lista. Por favor, intenta de nuevo.', 'error');
@@ -902,10 +886,10 @@ async function manejarSubmitFormLista(e) {
 function manejarEliminarLista(lista) {
   // Guardar lista pendiente de eliminar
   dom.listaPendienteEliminar = lista;
-  
+
   // Actualizar mensaje de confirmación
   dom.mensajeConfirmarEliminar.textContent = `¿Estás seguro que deseas eliminar la lista "${lista.nombre}"?`;
-  
+
   // Mostrar modal de confirmación
   dom.modalConfirmarEliminar.show();
 }
@@ -917,33 +901,33 @@ async function confirmarEliminarLista() {
   if (!dom.listaPendienteEliminar) {
     return;
   }
-  
+
   try {
     // Mostrar spinner
     dom.spinnerEliminar.classList.remove('d-none');
     dom.btnConfirmarEliminar.disabled = true;
-    
+
     const apiKey = obtenerApiKey();
     const sessionId = obtenerSessionId();
-    
+
     await eliminarLista(apiKey, sessionId, dom.listaPendienteEliminar.id);
-    
+
     // Cerrar modal de confirmación
     dom.modalConfirmarEliminar.hide();
-    
+
     // Eliminar de estado
     estado.listas = estado.listas.filter(l => l.id !== dom.listaPendienteEliminar.id);
-    
+
     // Actualizar tabs
     renderizarTabsListas();
-    
+
     // Si estábamos viendo esta lista, volver a Populares
     if (estado.listaActual && estado.listaActual.id === dom.listaPendienteEliminar.id) {
       cambiarTab('populares');
     }
-    
+
     ui.mostrarToast('Lista eliminada exitosamente', 'success');
-    
+
     // Limpiar lista pendiente
     dom.listaPendienteEliminar = null;
   } catch (error) {

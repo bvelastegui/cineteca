@@ -3,11 +3,7 @@
  * Transforma datos de la API de TMDB (inglés) a formato español.
  */
 
-import {
-  URL_BASE_IMG_FONDO_TMDB,
-  URL_BASE_IMG_POSTER_TMDB,
-  PLACEHOLDER_POSTER,
-} from '/js/constantes.js';
+import { PLACEHOLDER_POSTER, URL_BASE_IMG_FONDO_TMDB, URL_BASE_IMG_POSTER_TMDB } from '/js/constantes.js';
 
 /**
  * Normaliza una película de la API a formato español.

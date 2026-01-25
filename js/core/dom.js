@@ -36,12 +36,12 @@ class GestorUI {
     this.cargador = document.querySelector('#overlay');
     this.toast = document.querySelector('#toast-notificacion');
     this.toastMensaje = document.querySelector('#toast-mensaje');
-    
+
     // Inicializar instancia de Bootstrap Toast si existe
     if (this.toast && typeof bootstrap !== 'undefined') {
       this.toastInstancia = new bootstrap.Toast(this.toast, {
         autohide: true,
-        delay: 3000
+        delay: 3000,
       });
     }
   }
@@ -82,7 +82,7 @@ class GestorUI {
       'success': 'text-bg-success',
       'error': 'text-bg-danger',
       'warning': 'text-bg-warning',
-      'info': 'text-bg-info'
+      'info': 'text-bg-info',
     };
 
     this.toast.classList.add(tipoClase[tipo] || 'text-bg-info');

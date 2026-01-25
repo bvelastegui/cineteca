@@ -5,10 +5,10 @@
 
 import {
   URL_AUTENTICACION,
-  URL_ELIMINAR_SESION,
-  URL_TOKEN_SOLICITUD,
-  URL_SESION,
   URL_DETALLES_USUARIO,
+  URL_ELIMINAR_SESION,
+  URL_SESION,
+  URL_TOKEN_SOLICITUD,
 } from '/js/constantes.js';
 import { apiDelete, apiGet, apiPost } from '/js/core/http.js';
 import { guardarDatoCache, obtenerDatoCache } from '/js/core/cache.js';

@@ -4,7 +4,7 @@
  */
 
 import { apiGet, apiPost, obtenerHeadersApi } from '/js/core/http.js';
-import { URL_LISTAS_USUARIO, URL_LISTA, URL_LISTA_V4 } from '/js/constantes.js';
+import { URL_LISTA, URL_LISTA_V4, URL_LISTAS_USUARIO } from '/js/constantes.js';
 
 /**
  * Obtiene todas las listas de un usuario.
@@ -121,9 +121,9 @@ export async function agregarPeliculaALista(apiKey, sessionId, idLista, idPelicu
         items: [
           {
             media_type: 'movie',
-            media_id: idPelicula
-          }
-        ]
+            media_id: idPelicula,
+          },
+        ],
       }),
     },
   );
@@ -148,9 +148,9 @@ export async function eliminarPeliculaDeLista(apiKey, sessionId, idLista, idPeli
         items: [
           {
             media_type: 'movie',
-            media_id: idPelicula
-          }
-        ]
+            media_id: idPelicula,
+          },
+        ],
       }),
     },
   );

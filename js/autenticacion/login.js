@@ -3,12 +3,7 @@
  * Maneja el formulario de login y el flujo de autorización OAuth.
  */
 
-import {
-  crearSesion,
-  login,
-  solicitarAutorizacion,
-  verificarAuth,
-} from '/js/core/auth.js';
+import { crearSesion, login, solicitarAutorizacion, verificarAuth } from '/js/core/auth.js';
 import { redirigir, ui } from '/js/core/dom.js';
 import { URL_INICIO } from '/js/constantes.js';
 
