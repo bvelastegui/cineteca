@@ -1,5 +1,7 @@
 # PROYECTO FINAL DE ASIGNATURA
 
+#### Agregar una página de presentación
+
 Consumo y Gestión de Datos desde una API Pública (JavaScript Vanilla)
 
 ## 1. Contexto del Proyecto
@@ -43,6 +45,7 @@ Requisito: uso obligatorio de API Key (almacenada en una constante en JavaScript
 ## 5. Requisitos Técnicos Obligatorios
 
 Tecnologías permitidas:
+
 - [ ] HTML5
 - [ ] CSS (básico)
 - [ ] JavaScript Vanilla
@@ -61,8 +64,15 @@ Los datos obtenidos de la API deben ser transformados antes de ser usados. Ejemp
 ```json
 {
   "name": "Quito",
-  "main": { "temp": 289.5, "humidity": 78 },
-  "weather": [ { "description": "clear sky" } ]
+  "main": {
+    "temp": 289.5,
+    "humidity": 78
+  },
+  "weather": [
+    {
+      "description": "clear sky"
+    }
+  ]
 }
 ```
 
@@ -71,10 +81,18 @@ Los datos obtenidos de la API deben ser transformados antes de ser usados. Ejemp
 ```javascript
 {
   ciudad: 'Quito',
-  temperatura: 16.5,
-  humedad: 78,
-  clima: 'clear sky',
-  fechaConsulta: '2025-01-15'
+    temperatura
+:
+  16.5,
+    humedad
+:
+  78,
+    clima
+:
+  'clear sky',
+    fechaConsulta
+:
+  '2025-01-15'
 }
 ```
 

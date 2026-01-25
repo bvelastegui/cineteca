@@ -79,9 +79,7 @@ function guardarUsuario(usuario) {
  * Limpia todos los datos de autenticación del almacenamiento.
  */
 function limpiarAuth() {
-  eliminarDatoCache('api_key', PREFIJO_AUTH);
-  eliminarDatoCache('session_id', PREFIJO_AUTH);
-  eliminarDatoCache('user', PREFIJO_AUTH);
+  localStorage.clear();
 }
 
 // ============================================================================

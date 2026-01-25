@@ -43,7 +43,7 @@ const estado = {
   peliculas: [],
   listas: [],
   listaActual: null, // Lista seleccionada actualmente
-  tabActual: 'descubrir', // 'descubrir' o id de lista
+  tabActual: 'populares', // 'populares' o id de lista
   busqueda: '',
   debounceTimer: null,
   // Paginación
@@ -120,7 +120,7 @@ async function inicializar() {
   
   // Referencias a tabs
   dom.tabsListas = document.getElementById('tabs-listas');
-  dom.tabDescubrir = document.getElementById('tab-descubrir');
+  dom.tabPopulares = document.getElementById('tab-populares');
   
   // Referencias a modales
   dom.modalFormLista = new bootstrap.Modal(document.getElementById('modal-form-lista'));
@@ -180,10 +180,10 @@ function configurarEventos() {
     logoutButton.addEventListener('click', manejarLogout);
   }
   
-  // Tab Descubrir
-  dom.tabDescubrir.addEventListener('click', (e) => {
+  // Tab Populares
+  dom.tabPopulares.addEventListener('click', (e) => {
     e.preventDefault();
-    cambiarTab('descubrir');
+    cambiarTab('populares');
   });
   
   // Listas
@@ -219,14 +219,11 @@ async function cargarCategorias() {
 
 /**
  * Carga y renderiza las películas populares.
+ * @param {number} pagina - Número de página (opcional, default: 1)
  */
-async function cargarPeliculasPopulares() {
+async function cargarPeliculasPopulares(pagina = 1) {
   try {
     mostrarCargador(dom.moviesOverlay, true);
-    
-    // Ocultar información de búsqueda y paginación
-    ocultarInfoBusqueda();
-    ocultarPaginacion();
     
     // Limpiar búsqueda y lista actual en estado
     estado.busqueda = '';
@@ -235,19 +232,35 @@ async function cargarPeliculasPopulares() {
     const apiKey = obtenerApiKey();
 
     // Obtener datos de la API (Extract)
-    const datosPeliculas = await obtenerPeliculas(apiKey);
+    const datosPeliculas = await obtenerPeliculas(apiKey, pagina);
 
     // Transformar datos a español (Transform)
     estado.peliculas = normalizarPeliculas(
       datosPeliculas.results,
       estado.categorias,
     );
+    
+    // Actualizar información de paginación
+    estado.paginacion.paginaActual = datosPeliculas.page;
+    estado.paginacion.totalPaginas = datosPeliculas.total_pages;
+    estado.paginacion.totalResultados = datosPeliculas.total_results;
+    
+    // Ocultar información de búsqueda
+    ocultarInfoBusqueda();
+    
+    // Mostrar/actualizar paginación
+    actualizarPaginacion();
 
     // Cargar en el DOM (Load)
     renderizarPeliculas(estado.peliculas, dom.moviesWrapper, estado.listas);
     
     // Configurar event listeners de películas
     configurarEventosPeliculas();
+    
+    // Scroll al inicio de la sección si no es la primera página
+    if (pagina > 1) {
+      document.getElementById('movies-section').scrollIntoView({ behavior: 'smooth' });
+    }
   } catch (error) {
     console.error('Error al cargar películas:', error);
     dom.moviesWrapper.innerHTML = '<p class="text-danger">Error al cargar películas. Por favor, intenta de nuevo.</p>';
@@ -493,6 +506,8 @@ function ocultarPaginacion() {
 async function irAPagina(pagina) {
   if (estado.busqueda) {
     await buscarPeliculas(pagina);
+  } else {
+    await cargarPeliculasPopulares(pagina);
   }
 }
 
@@ -568,7 +583,22 @@ async function agregarPeliculaAListaHandler(peliculaId, listaId) {
     const lista = estado.listas.find(l => l.id === listaId);
     const nombreLista = lista ? lista.nombre : 'la lista';
     
-    await agregarPeliculaALista(apiKey, sessionId, listaId, peliculaId);
+    const respuesta = await agregarPeliculaALista(apiKey, sessionId, listaId, peliculaId);
+    const datos = await respuesta.json();
+    
+    // Verificar si la película ya existe en la lista
+    if (datos.results && datos.results[0] && !datos.results[0].success) {
+      const error = datos.results[0].error;
+      if (error && error.some(msg => msg.includes('already been taken'))) {
+        ui.mostrarToast(`La película ya está en "${nombreLista}"`, 'warning');
+        return;
+      }
+    }
+    
+    if (!respuesta.ok) {
+      ui.mostrarToast('Error al agregar la película. Por favor, intenta de nuevo.', 'error');
+      return;
+    }
     
     ui.mostrarToast(`Película agregada a "${nombreLista}"`, 'success');
     
@@ -665,8 +695,8 @@ function renderizarTabsListas() {
 }
 
 /**
- * Cambia el tab activo y carga el contenido correspondiente.
- * @param {string|number} tabId - 'descubrir' o ID de lista
+ * Cambia entre las pestañas de películas y listas.
+ * @param {string|number} tabId - 'populares' o ID de lista
  */
 async function cambiarTab(tabId) {
   // Actualizar estado
@@ -684,13 +714,13 @@ async function cambiarTab(tabId) {
     link.removeAttribute('aria-current');
   });
   
-  if (tabId === 'descubrir') {
+  if (tabId === 'populares') {
     // Limpiar lista actual
     estado.listaActual = null;
     
-    // Activar tab Descubrir
-    dom.tabDescubrir.classList.add('active');
-    dom.tabDescubrir.setAttribute('aria-current', 'page');
+    // Activar tab Populares
+    dom.tabPopulares.classList.add('active');
+    dom.tabPopulares.setAttribute('aria-current', 'page');
     
     // Ocultar descripción de lista
     dom.listaDescripcionContainer.classList.add('d-none');
@@ -907,9 +937,9 @@ async function confirmarEliminarLista() {
     // Actualizar tabs
     renderizarTabsListas();
     
-    // Si estábamos viendo esta lista, volver a Descubrir
+    // Si estábamos viendo esta lista, volver a Populares
     if (estado.listaActual && estado.listaActual.id === dom.listaPendienteEliminar.id) {
-      cambiarTab('descubrir');
+      cambiarTab('populares');
     }
     
     ui.mostrarToast('Lista eliminada exitosamente', 'success');

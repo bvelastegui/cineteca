@@ -16,20 +16,24 @@ const PREFIJO_CACHE = 'movies_';
 /**
  * Obtiene las películas populares desde TMDB.
  * @param {string} apiKey - API Key de TMDB
+ * @param {number} pagina - Número de página (default: 1)
  * @return {Promise<Object>} - Respuesta cruda de la API
  */
-export async function obtenerPeliculas(apiKey) {
-  let datos = obtenerDatoCache('popular', PREFIJO_CACHE);
+export async function obtenerPeliculas(apiKey, pagina = 1) {
+  const cacheKey = `popular_${pagina}`;
+  let datos = obtenerDatoCache(cacheKey, PREFIJO_CACHE);
 
-  if (!datos) {
-    datos = await apiGet(
-      `${URL_PELICULAS_POPULARES}?language=es-EC&region=EC&page=1`,
-      apiKey,
-      'Error al obtener películas',
-    );
-
-    guardarDatoCache('popular', datos, PREFIJO_CACHE);
+  if (datos) {
+    return datos;
   }
+
+  datos = await apiGet(
+    `${URL_PELICULAS_POPULARES}?language=es-EC&region=EC&page=${pagina}`,
+    apiKey,
+    'Error al obtener películas',
+  );
+
+  guardarDatoCache(cacheKey, datos, PREFIJO_CACHE);
 
   return datos;
 }
