@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineTeca - Proyecto Final</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+    rel="stylesheet"
+  >
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"
+  >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --bs-font-sans-serif: "Nunito", sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    .placeholder {
+      width: 20px;
+    }
+  </style>
+  <noscript>
+    <style>
+      main {
+        display: none;
+      }
+
+      noscript {
+        max-width: var(--bs-breakpoint-sm);
+        padding: 15px;
+      }
+    </style>
+  </noscript>
+</head>
+<body class="bg-body">
+
+<noscript class="w-100 m-auto">
+  <img class="mb-4" width="72" src="/assets/img/logo.svg" alt="">
+  <p class="h3 mb-3 fw-normal">
+    Lo sentimos, pero CineTeca no funciona correctamente sin JavaScript habilitado.
+  </p>
+  <p class="h3 fw-normal">Por favor, habilítalo para continuar.</p>
+</noscript>
+
+<div
+  id="overlay"
+  class="position-absolute z-3 d-flex bg-body bg-opacity-75 top-0 start-0 end-0 bottom-0 align-items-center justify-content-center"
+>
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<header>
+  <nav class="navbar navbar-expand bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="/assets/img/logo.svg" alt="Logo" width="30" class="d-inline-block align-text-top">
+        <div style="line-height: 1.2">
+          CineTeca
+          <div style="font-size: 50%" class="fw-bold text-body-tertiary text-uppercase">Tu biblioteca de películas</div>
+        </div>
+      </a>
+      <div class="collapse navbar-collapse">
+        <form class="ms-auto d-flex" style="width: 250px" id="search-form">
+          <input
+            type="search"
+            name="q"
+            id="search-input"
+            class="form-control w-100"
+            placeholder="Buscar películas..."
+            aria-label="Buscar películas"
+          />
+        </form>
+        <ul class="navbar-nav ms-3 border-start px-2">
+          <li class="nav-item dropdown">
+            <a
+              href="javascript:void(0)"
+              class="nav-link"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              id="user-name"
+            >
+              <div class="d-inline-flex align-items-center">
+                <span class="d-flex flex-column align-items-end">
+                  <span style="width: 150px" class="placeholder placeholder-wave"></span>
+                  <span style="width: 80px; margin-top: 2px" class="placeholder placeholder-wave"></span>
+                </span>
+                <span style="width: 30px; height: 30px" class="ms-2 placeholder placeholder-wave rounded-circle"></span>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="javascript:void(0)" id="logout" class="dropdown-item">Cerrar sesión</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  <aside>
+    <form class="d-flex align-items-center mt-4 pb-2 border-bottom">
+      <ul class="nav nav-underline flex-grow-1" id="tabs-listas">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" id="tab-populares" data-tab="populares" aria-current="page">Populares</a>
+        </li>
+        <!-- Las listas se agregarán dinámicamente aquí -->
+      </ul>
+      <div class="ms-auto d-flex gap-2">
+        <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-2 lh-1" id="crear-lista">
+          Crear Lista
+          <i class="bi bi-plus" style="font-size: 1.5em"></i>
+        </button>
+      </div>
+    </form>
+  </aside>
+
+  <!-- Descripción de lista (solo visible cuando se selecciona una lista) -->
+  <div id="lista-descripcion-container" class="d-none mt-4">
+    <h5 id="lista-titulo" class="mb-2"></h5>
+    <p id="lista-descripcion" class="text-muted mb-2"></p>
+    <div class="d-flex gap-3">
+      <a href="#" id="btn-editar-lista-actual" class="text-decoration-none">
+        <i class="bi bi-pencil"></i> Editar lista
+      </a>
+      <a href="#" id="btn-eliminar-lista-actual" class="text-danger text-decoration-none">
+        <i class="bi bi-trash"></i> Eliminar lista
+      </a>
+    </div>
+  </div>
+
+  <section
+    id="movies-section"
+    class="py-5 position-relative"
+  >
+    <!-- Información de búsqueda -->
+    <div id="busqueda-info" class="d-none mb-4">
+      <h5 id="busqueda-titulo" class="mb-1"></h5>
+      <p id="busqueda-cantidad" class="text-muted mb-0"></p>
+    </div>
+
+    <div
+      id="movies-overlay"
+      class="position-absolute z-3 d-flex bg-body bg-opacity-75 top-0 start-0 end-0 bottom-0 align-items-center justify-content-center"
+    >
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div
+      id="movies-wrapper"
+      style="display: grid; gap: 32px 16px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"
+    >
+    </div>
+
+    <!-- Controles de paginación -->
+    <nav id="paginacion-container" class="d-none mt-5" aria-label="Navegación de páginas">
+      <ul class="pagination justify-content-center" id="paginacion-lista">
+        <!-- Los números de página se renderizarán dinámicamente aquí -->
+      </ul>
+    </nav>
+  </section>
+</main>
+
+<!-- Toast Container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div
+    id="toast-notificacion"
+    class="toast align-items-center border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body" id="toast-mensaje">
+        <!-- Mensaje dinámico -->
+      </div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Cerrar"
+      ></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Crear/Editar Lista -->
+<div class="modal fade" id="modal-form-lista" tabindex="-1" aria-labelledby="modalFormListaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalFormListaLabel">Crear Nueva Lista</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form id="form-lista" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="lista-id" value="">
+          <div class="mb-3">
+            <label for="lista-nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              id="lista-nombre"
+              placeholder="Ej: Mis películas favoritas"
+              required
+            >
+          </div>
+          <div class="mb-3">
+            <label for="lista-descripcion-input" class="form-label">Descripción</label>
+            <textarea
+              class="form-control"
+              id="lista-descripcion-input"
+              rows="3"
+              placeholder="Descripción opcional de tu lista..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btn-guardar-lista">
+            <span class="spinner-border spinner-border-sm d-none" id="spinner-guardar"></span>
+            <span id="texto-btn-guardar-lista">Crear Lista</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmación de Eliminación -->
+<div
+  class="modal fade"
+  id="modal-confirmar-eliminar"
+  tabindex="-1"
+  aria-labelledby="modalConfirmarEliminarLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConfirmarEliminarLabel">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p id="mensaje-confirmar-eliminar">¿Estás seguro que deseas eliminar esta lista?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btn-confirmar-eliminar">
+          <span class="spinner-border spinner-border-sm d-none" id="spinner-eliminar"></span>
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
+></script>
+<script type="module" src="/js/peliculas/peliculas.js"></script>
+</body>
+</html>
