@@ -1,6 +1,6 @@
 /* URLs de la aplicación */
 export const URL_LOGIN = '/login.html';
-export const URL_INICIO = '/index.html';
+export const URL_INICIO = '/home.html';
 
 /* URLs base de TMDB */
 export const URL_BASE_AUTORIZACION_TMDB = 'https://www.themoviedb.org/authenticate';

@@ -1,436 +1,322 @@
 <div align="center">
-    <h1>CineTeca</h1>
-    <p>&nbsp;</p>
-    <img src="assets/img/logo.svg" alt="CineTeca Logo" width="200">
-    <p>&nbsp;</p>
-    <p>
-        <strong>Aplicación web creada con JavaScript Vanilla que permite a los usuarios explorar películas, filtrarlas y gestionar listas personalizadas sincronizadas directamente con la API de TMDB.</strong>
-    </p>
+  <img src="assets/img/logo.svg" alt="CineTeca Logo" width="150">
+  
+  # CineTeca
+  
+  ### Tu Biblioteca Personal de Películas
+  
+  **Descubre, organiza y gestiona tus películas favoritas con CineTeca.**  
+  Conecta con la API de TMDB y crea listas personalizadas de tus películas preferidas.
+  
+  [![Made with Vanilla JavaScript](https://img.shields.io/badge/Made%20with-Vanilla%20JavaScript-yellow?style=flat-square&logo=javascript)](https://developer.mozilla.org/es/docs/Web/JavaScript)
+  [![Bootstrap 5](https://img.shields.io/badge/Bootstrap-5.3-purple?style=flat-square&logo=bootstrap)](https://getbootstrap.com/)
+  [![TMDB API](https://img.shields.io/badge/TMDB-API%20v3-01d277?style=flat-square&logo=themoviedatabase)](https://www.themoviedb.org/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+  
+  [Ver Demo](#) • [Reportar Bug](https://github.com/bvelastegui/cineteca/issues) • [Solicitar Característica](https://github.com/bvelastegui/cineteca/issues)
+  
 </div>
 
----
+## Capturas de Pantalla
 
-## Información del Proyecto
+<div align="center">
+  <img src="assets/img/landing/home.jpg" alt="Dashboard Principal" width="800">
+  <p><em>Dashboard principal con películas populares</em></p>
+</div>
 
-**Proyecto Final de Asignatura** - Desarrollo de Software  
-**Integrantes**:
-- Bryan Velastegui
-- Evelyn Morocho
+<table>
+  <tr>
+    <td width="50%">
+      <img src="assets/img/landing/login.jpg" alt="Inicio de Sesión">
+      <p align="center"><strong>Inicio de Sesión</strong><br>Autenticación OAuth con TMDB</p>
+    </td>
+    <td width="50%">
+      <img src="assets/img/landing/search.jpg" alt="Búsqueda">
+      <p align="center"><strong>Búsqueda Avanzada</strong><br>Encuentra películas al instante</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="assets/img/landing/create_list.jpg" alt="Crear Lista">
+      <p align="center"><strong>Crear Listas</strong><br>Listas personalizadas</p>
+    </td>
+    <td>
+      <img src="assets/img/landing/list.jpg" alt="Gestión de Listas">
+      <p align="center"><strong>Gestión de Listas</strong><br>Administra tus colecciones</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="assets/img/landing/edit_list.jpg" alt="Editar Lista">
+      <p align="center"><strong>Editar Listas</strong><br>Modifica fácilmente</p>
+    </td>
+    <td>
+      <img src="assets/img/landing/add_movie_to_list.jpg" alt="Agregar Película">
+      <p align="center"><strong>Agregar Películas</strong><br>Añade a tus listas</p>
+    </td>
+  </tr>
+</table>
 
-> [!NOTE]
-> Ver [OBJETIVO.md](OBJETIVO.md) para objetivos detallados, alcance del proyecto y división de tareas.
+## Características Principales
 
----
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <h3>Búsqueda Avanzada</h3>
+      <p>Busca películas en tiempo real utilizando la API de TMDB. Encuentra cualquier película con búsqueda instantánea y resultados paginados.</p>
+    </td>
+    <td width="33%" align="center">
+      <h3>Listas Personalizadas</h3>
+      <p>Crea y gestiona listas personalizadas de películas. Organiza tus favoritas, películas por ver, o cualquier categoría que imagines.</p>
+    </td>
+    <td width="33%" align="center">
+      <h3>Autenticación OAuth</h3>
+      <p>Inicia sesión de forma segura con tu cuenta de TMDB. Tus datos están protegidos con autenticación OAuth 2.0.</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <h3>Caché Inteligente</h3>
+      <p>Sistema de caché con TTL de 1 hora que optimiza las peticiones y mejora la velocidad de carga de la aplicación.</p>
+    </td>
+    <td align="center">
+      <h3>Películas Populares</h3>
+      <p>Descubre las películas más populares del momento. Explora tendencias y encuentra tu próxima película favorita.</p>
+    </td>
+    <td align="center">
+      <h3>Gestión Completa</h3>
+      <p>CRUD completo de listas: crea, edita, elimina y organiza. Agrega o quita películas de tus listas con un solo clic.</p>
+    </td>
+  </tr>
+</table>
 
-## Descripción
-
-CineTeca es una biblioteca digital de películas que consume la API de The Movie Database (TMDB) para ofrecer información actualizada sobre películas populares, estrenos recientes y gestión de listas personalizadas. El proyecto implementa patrones de arquitectura modernos como ETL (Extract-Transform-Load) y estrategias de caché para optimizar el rendimiento.
-
-### Características Principales
-
-- **Autenticación con API Key** de TMDB
-- **Dashboard** con tendencias y estrenos recientes
-- **Filtros avanzados** por género, personas y fecha
-- **CRUD completo** de listas personalizadas
-- **Sistema de caché inteligente** con localStorage
-- **Diseño responsivo** compatible con móviles, tablets y desktop
-- **Optimización** para prevenir rate limiting de la API
-
----
-
-## Stack Tecnológico
-
-- **HTML5**: Estructura semántica
-- **CSS3**: Estilos personalizados
-- **Bootstrap 5**: Framework CSS (vía CDN)
-- **JavaScript ES6+**: Vanilla JavaScript (sin frameworks)
-- **TMDB API v3**: Servicio REST para datos de películas
-- **localStorage**: Persistencia local y caché
-- **GitHub Pages**: Deployment
-
-### Restricciones
-
-> [!IMPORTANT]
-> No se permite usar: React, Vue, Angular, jQuery u otros frameworks JavaScript
-
----
-
-## Estado del Proyecto
-
-> [!NOTE]
-> **PROYECTO EN PROGRESO DE IMPLEMENTACIÓN**
-> 
-> El proyecto está actualmente en fase de desarrollo activo. Se ha implementado la estructura base del proyecto con arquitectura modular y el sistema de autenticación está en desarrollo.
+## Inicio Rápido
 
 ### Requisitos Previos
-1. Navegador web moderno (Chrome, Firefox, Safari, Edge)
-2. API Key de TMDB (gratuita)
-3. Servidor HTTP local (recomendado para desarrollo)
+
+- Navegador web moderno (Chrome, Firefox, Safari, Edge)
+- API Key de TMDB (gratuita)
+- Servidor HTTP local para desarrollo
 
 ### Obtener API Key de TMDB
+
 1. Crear cuenta en [The Movie Database](https://www.themoviedb.org/)
-2. Ir a Configuración → API
+2. Ir a **Configuración → API**
 3. Solicitar API Key (seleccionar "Developer")
 4. Copiar la API Key generada
 
-### Ejecutar el Proyecto Localmente
+### Ejecutar Localmente
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/bvelastegui/cineteca.git
+cd cineteca
+
 # Opción 1: Python 3 (recomendado)
 python3 -m http.server 8000
-# Abrir http://localhost:8000 en el navegador
 
-# Opción 2: Node.js con http-server
+# Opción 2: Node.js
 npx http-server -p 8000
-# Abrir http://localhost:8000 en el navegador
 
 # Opción 3: PHP
 php -S localhost:8000
-# Abrir http://localhost:8000 en el navegador
+
+# Abrir en el navegador
+# http://localhost:8000
 ```
 
-> [!TIP]
-> Se recomienda usar un servidor HTTP local en lugar de abrir `index.html` directamente para evitar problemas con CORS y módulos ES6.
+> **Nota:** Usa un servidor HTTP local en lugar de abrir `index.html` directamente para evitar problemas con CORS y módulos ES6.
 
----
+## Tecnologías Utilizadas
+
+<div align="center">
+
+| Frontend | API & Storage | Deployment |
+|:--------:|:-------------:|:----------:|
+| ![HTML5](https://img.shields.io/badge/HTML5-black?style=flat-square&logo=html5) | ![TMDB](https://img.shields.io/badge/TMDB_API-black?style=flat-square&logo=themoviedatabase) | ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-black?style=flat-square&logo=github) |
+| ![CSS3](https://img.shields.io/badge/CSS3-black?style=flat-square&logo=css3) | ![localStorage](https://img.shields.io/badge/localStorage-black?style=flat-square&logo=html5) | |
+| ![JavaScript](https://img.shields.io/badge/JavaScript_ES6+-black?style=flat-square&logo=javascript) | | |
+| ![Bootstrap](https://img.shields.io/badge/Bootstrap_5-black?style=flat-square&logo=bootstrap) | | |
+
+</div>
+
+### Características Técnicas
+
+- **Vanilla JavaScript**: Aplicación sin frameworks, usando JavaScript puro con ES6+ Modules, async/await
+- **Arquitectura Modular**: Código organizado siguiendo el patrón ETL (Extract-Transform-Load)
+- **Sin Dependencias**: No requiere npm, webpack, o bundlers
+- **Responsive Design**: Compatible con móviles, tablets y desktop
 
 ## Estructura del Proyecto
 
-### Arquitectura Implementada
 ```
-/cineteca
-├── assets/                          # Recursos estáticos
-│   ├── favicon.ico
+cineteca/
+├── assets/
 │   └── img/
-│       └── logo.svg
-├── js/                              # Código JavaScript modular
-│   ├── features/                    # Módulos de funcionalidades
-│   │   ├── auth/                    # Sistema de autenticación
-│   │   │   ├── authApi.js           # Llamadas API de autenticación
-│   │   │   ├── authService.js       # Lógica de negocio de auth
-│   │   │   ├── authStorage.js       # Gestión de localStorage
-│   │   │   ├── User.js              # Modelo de datos de usuario
-│   │   │   └── userAdapter.js       # Adaptador ETL para usuarios
-│   │   └── cache/                   # Sistema de caché
-│   │       └── cacheService.js      # Servicio de caché con TTL
-│   ├── lib/                         # Librerías auxiliares
-│   │   ├── dom.js                   # Utilidades DOM
-│   │   └── render.js                # Utilidades de renderizado
-│   ├── pages/                       # Controladores de páginas
-│   │   ├── index.js                 # Dashboard principal
-│   │   └── login.js                 # Página de login
-│   └── shared/                      # Recursos compartidos
-│       ├── constants.js             # Constantes globales
-│       └── http.js                  # Cliente HTTP base
-├── index.html                       # Página principal (Dashboard)
-├── login.html                       # Página de autenticación
-├── tsconfig.json                    # Configuración TypeScript (JSDoc)
-├── README.md                        # Documentación general
-├── OBJETIVO.md                      # Objetivos y división de tareas
-├── INSTRUCTIONS.md                  # Instrucciones de la asignatura
-└── LICENSE                          # Licencia MIT
+│       ├── logo.svg
+│       └── landing/          # Screenshots de la app
+├── js/
+│   ├── core/                 # Núcleo de la aplicación
+│   │   ├── auth.js          # Sistema de autenticación OAuth
+│   │   ├── cache.js         # Sistema de caché con TTL
+│   │   └── dom.js           # Utilidades DOM
+│   ├── peliculas/           # Módulo de películas
+│   │   ├── api.js           # API de TMDB
+│   │   ├── normalizador.js  # Adaptador ETL
+│   │   └── renderizador.js  # Renderizado de UI
+│   ├── listas/              # Módulo de listas
+│   │   ├── api.js
+│   │   ├── normalizador.js
+│   │   └── renderizador.js
+│   └── config/
+│       └── constantes.js    # Constantes globales
+├── index.html               # Landing page
+├── login.html               # Página de autenticación
+├── home.html                # Dashboard principal
+└── README.md
 ```
 
-### Arquitectura Modular Implementada
+### Patrón de Arquitectura
 
-El proyecto sigue una arquitectura modular basada en capas:
+El proyecto implementa el patrón **ETL (Extract-Transform-Load)**:
 
-- **`features/`**: Módulos de funcionalidades organizados por dominio
-  - `auth/` - Sistema de autenticación
-  - `cache/` - Sistema de caché con TTL
-- **`lib/`**: Librerías y utilidades reutilizables
-- **`pages/`**: Controladores de las páginas HTML
-- **`shared/`**: Recursos compartidos entre módulos (constantes, http client, etc.)
-
----
+1. **Extract**: Los datos se obtienen de la API de TMDB
+2. **Transform**: Los adaptadores/normalizadores convierten los datos (inglés → español)
+3. **Load**: Los datos transformados se cargan en la UI y localStorage
 
 ## Funcionalidades
 
-### ✅ Implementado
+### Sistema de Autenticación OAuth
+- Flujo OAuth completo con TMDB
+- Persistencia de sesión (localStorage/sessionStorage)
+- Gestión segura de cierre de sesión
+- Validación de sesión activa
 
-#### 1. Sistema de Autenticación ✅
-- ✅ Arquitectura modular de auth
-- ✅ Cliente HTTP base con fetch
-- ✅ Modelo de datos User
-- ✅ Adaptador ETL para transformación de datos
-- ✅ Gestión de localStorage
-- ✅ Validación de API Key con TMDB
-- ✅ Interfaz de login completamente funcional
-- ✅ Persistencia de sesión
-- ✅ Redirección post-login
-- ✅ Manejo de errores de autenticación
+### Dashboard de Películas
+- Visualización de películas populares
+- Sistema de paginación
+- Loading spinners y estados de carga
+- Sistema de tabs (Populares / Listas)
 
-#### 2. Sistema de Caché Inteligente ✅
-- ✅ Servicio de caché reutilizable (`CacheService`)
-- ✅ TTL (Time To Live) configurable (1 hora por defecto)
-- ✅ Prefijos automáticos para namespacing
-- ✅ Limpieza automática de datos expirados
-- ✅ Manejo de QuotaExceededError
-- ✅ Integrado con sistema de autenticación
-- ✅ Almacenamiento con timestamp de expiración
+### Búsqueda y Filtros
+- Búsqueda en tiempo real con debounce
+- Paginación de resultados
+- Filtrado por género
+- Detección de películas duplicadas
 
-### 📋 Pendiente
+### CRUD de Listas
+- Crear listas personalizadas
+- Ver todas las listas del usuario
+- Editar listas (nombre y descripción)
+- Eliminar listas completas
+- Agregar/eliminar películas de listas
+- Modals de confirmación
 
-#### 3. Dashboard Principal
-- **Tendencias**: Películas más populares de la semana
-- **Estrenos**: Películas en cartelera actuales
+### Experiencia de Usuario
+- Bootstrap Toasts para notificaciones
+- Placeholders para imágenes
+- Sistema de caché inteligente (TTL 1h)
+- Landing page con galería de screenshots
 
-#### 4. Filtros Avanzados
-- Filtrar por género (acción, comedia, drama, etc.)
-- Buscar por actor o director
-- Filtrar por fecha de estreno
+## Futuras Mejoras
 
-#### 5. Gestión de Listas - CRUD
-- **Crear** listas personalizadas
-- **Ver** listas existentes y su contenido
-- **Agregar** películas a listas
-- **Eliminar** películas de listas o borrar listas completas
+- Filtros avanzados por fecha de estreno
+- Búsqueda por actor y director
+- Ordenamiento personalizado de resultados
+- Sistema de favoritos y watchlist
+- Modo oscuro/claro
+- Compartir listas con otros usuarios
 
----
-
-## Endpoints de TMDB API
-
-| Endpoint | Método | Descripción | Estado |
-|----------|--------|-------------|--------|
-| `/authentication` | GET | Validar API Key | ✅ Implementado |
-| `/trending/movie/week` | GET | Películas en tendencia | 🔄 En desarrollo |
-| `/movie/now_playing` | GET | Estrenos recientes | 📋 Pendiente |
-| `/discover/movie` | GET | Descubrir películas con filtros | 📋 Pendiente |
-| `/search/movie` | GET | Buscar películas | 📋 Pendiente |
-| `/search/person` | GET | Buscar personas (actores/directores) | 📋 Pendiente |
-| `/list` | POST | Crear nueva lista | 📋 Pendiente |
-| `/list/{list_id}` | GET | Obtener detalles de lista | 📋 Pendiente |
-| `/list/{list_id}/add_item` | POST | Agregar película a lista | 📋 Pendiente |
-| `/list/{list_id}/remove_item` | POST | Eliminar película de lista | 📋 Pendiente |
-| `/list/{list_id}` | DELETE | Eliminar lista completa | 📋 Pendiente |
-
----
-
-## Progreso de Desarrollo
-
-### Sprint Actual: Dashboard Principal y Funcionalidades Avanzadas
-
-#### ✅ Completado
-- [x] Estructura de directorios modular
-- [x] Cliente HTTP base con fetch API
-- [x] Modelo de datos User
-- [x] Adaptador ETL para usuarios (inglés → español)
-- [x] Módulos de autenticación (API, Service, Storage)
-- [x] Archivo HTML de login
-- [x] Archivo HTML de dashboard principal
-- [x] Configuración de constantes globales
-- [x] Librerías auxiliares (DOM, Render)
-- [x] **Sistema de Autenticación Completo**
-  - [x] Validación de API Key con TMDB
-  - [x] Interfaz de usuario del formulario de login
-  - [x] Flujo de redirección post-login
-  - [x] Manejo de errores en autenticación
-  - [x] Persistencia de sesión con localStorage
-- [x] **Sistema de Caché Completo**
-  - [x] CacheService con TTL configurable
-  - [x] Prefijos automáticos por módulo
-  - [x] Limpieza de datos expirados
-  - [x] Manejo de límites de localStorage
-  - [x] Integración con authStorage
-
-#### 🔄 En Desarrollo
-- [ ] Dashboard con películas en tendencia
-- [ ] Dashboard con estrenos recientes
-- [ ] Tarjetas de películas (cards)
-- [ ] Sistema de filtros avanzados
-
-#### 📋 Siguientes Pasos
-1. ✅ ~~Completar sistema de autenticación~~
-2. ✅ ~~Implementar sistema de caché inteligente~~
-3. 🔄 Implementar dashboard con tendencias y estrenos
-4. Agregar sistema de filtros avanzados
-5. Desarrollar CRUD de listas personalizadas
-6. Realizar pruebas y debugging
-7. Desplegar en GitHub Pages
-
----
-
-## Despliegue
-
-La aplicación será desplegada en GitHub Pages.
-
-**URL de producción**: Se actualizará una vez desplegado el proyecto.
-
----
-
-## Arquitectura Técnica Implementada
-
-### Patrón ETL (Extract-Transform-Load)
-
-El proyecto implementa el patrón ETL para todas las operaciones con la API de TMDB:
-
-```javascript
-// Ejemplo real del proyecto: js/features/auth/userAdapter.js
-
-// Extract: Los datos vienen de la API de TMDB
-// Transform: Adaptador convierte datos de inglés a español
-export function toUser (tmdbUser) {
-  return new User({
-    id: tmdbUser.id,
-    nombre: tmdbUser.username,
-    nombreCompleto: tmdbUser.name || tmdbUser.username
-  })
-}
-
-// Load: Los datos se guardan en localStorage y se usan en la aplicación
-```
-
-### Arquitectura de Capas
-
-**1. Capa de API (`*Api.js`)**
-- Comunicación directa con TMDB API
-- Manejo de endpoints y parámetros
-- Ejemplo: `js/features/auth/authApi.js`
-
-**2. Capa de Servicio (`*Service.js`)**
-- Lógica de negocio
-- Orquestación de operaciones
-- Ejemplo: `js/features/auth/authService.js`
-
-**3. Capa de Almacenamiento (`*Storage.js`)**
-- Gestión de localStorage
-- Persistencia de datos
-- Ejemplo: `js/features/auth/authStorage.js`
-
-**4. Capa de Adaptadores (`*Adapter.js`)**
-- Transformación de datos (ETL)
-- Normalización a español
-- Ejemplo: `js/features/auth/userAdapter.js`
-
-**5. Modelos de Datos (`*.js` en features)**
-- Estructuras de datos
-- Validación
-- Ejemplo: `js/features/auth/User.js`
-
-**6. Capa de Caché (`CacheService`)**
-- Sistema de caché reutilizable
-- TTL configurable por entrada
-- Limpieza automática de datos expirados
-- Ejemplo: `js/features/cache/cacheService.js`
+## Arquitectura Técnica
 
 ### Sistema de Caché Inteligente
 
-El proyecto implementa un sistema de caché robusto (`CacheService`) con las siguientes características:
-
 ```javascript
-// Ejemplo real: js/features/cache/cacheService.js
+// TTL de 1 hora por defecto
+// Namespacing automático
+// Limpieza automática de datos expirados
+// Manejo de QuotaExceededError
 
-export class CacheService {
-  constructor(prefix = 'tmdb_cache_') {
-    this.prefix = prefix; // Namespacing automático
-  }
-
-  // Obtener dato con validación de expiración
-  get(key) {
-    const cachedItem = localStorage.getItem(this.prefix + key);
-    if (!cachedItem) return null;
-
-    const { data, expiry } = JSON.parse(cachedItem);
-    
-    // Auto-limpieza de datos expirados
-    if (Date.now() > expiry) {
-      localStorage.removeItem(this.prefix + key);
-      return null;
-    }
-    
-    return data;
-  }
-
-  // Guardar con TTL configurable (1 hora por defecto)
-  set(key, data, ttl = 60) {
-    const item = {
-      data: data,
-      expiry: Date.now() + (ttl * 60 * 1000)
-    };
-    localStorage.setItem(this.prefix + key, JSON.stringify(item));
-  }
-}
+const cache = new CacheService('movies_');
+cache.set('popular', data, 60); // 60 minutos TTL
+const cached = cache.get('popular');
 ```
 
-**Características clave:**
-- ✅ TTL configurable (por defecto 1 hora)
-- ✅ Prefijos automáticos para evitar colisiones
-- ✅ Limpieza automática de datos expirados
-- ✅ Manejo de `QuotaExceededError`
-- ✅ Usado por `authStorage` para persistencia
+### Arquitectura Modular
 
-### Cliente HTTP Centralizado
+```
+┌─────────────────────────────────────────┐
+│          Capa de Presentación           │
+│        (HTML + Renderizadores)          │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│        Capa de Normalizadores           │
+│        (Patrón ETL - Transform)         │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│            Capa de API                  │
+│    (Comunicación con TMDB - Extract)    │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│          Capa de Caché/Storage          │
+│      (localStorage - Load/Persist)      │
+└─────────────────────────────────────────┘
+```
 
-El proyecto utiliza un cliente HTTP base (`js/shared/http.js`) que:
-- Maneja configuración común de fetch
-- Gestiona headers y autenticación
-- Proporciona métodos `GET`, `POST`, `PUT`, `DELETE`
-- Reutilizable en todos los módulos
+## Documentación Adicional
 
-### Utilidades Compartidas
+- **[OBJETIVO.md](OBJETIVO.md)**: Objetivos detallados y división de tareas
+- **[INSTRUCTIONS.md](INSTRUCTIONS.md)**: Instrucciones de la asignatura
 
-**`js/lib/dom.js`**: Manipulación del DOM
-- Selección de elementos
-- Event listeners
-- Operaciones comunes
+## Equipo de Desarrollo
 
-**`js/lib/render.js`**: Renderizado de componentes
-- Templates HTML
-- Actualización de UI
-- Componentes reutilizables
-
-### Constantes Globales
-
-`js/shared/constants.js` centraliza:
-- API Base URL
-- Rutas de endpoints
-- Configuraciones globales
-- Evita "magic strings"
-
----
-
-## Contribución
-
-Este es un proyecto académico. Para contribuir:
-
-1. Crear un branch con formato: `feature/nombre-funcionalidad`
-2. Hacer commits descriptivos en español
-3. Crear Pull Request hacia `main`
-4. Solicitar code review del compañero
-5. Hacer merge después de aprobación
-
----
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/bvelastegui">
+        <img src="https://github.com/bvelastegui.png" width="100px;" alt="Bryan Velastegui"/><br />
+        <sub><b>Bryan Velastegui</b></sub>
+      </a><br />
+      <a href="https://github.com/bvelastegui" title="GitHub">@bvelastegui</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/evelyn18m">
+        <img src="https://github.com/evelyn18m.png" width="100px;" alt="Evelyn Morocho"/><br />
+        <sub><b>Evelyn Morocho</b></sub>
+      </a><br />
+      <a href="https://github.com/evelyn18m" title="GitHub">@evelyn18m</a>
+    </td>
+  </tr>
+</table>
 
 ## Licencia
 
-Este proyecto está licenciado bajo la **MIT License** - ver el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está licenciado bajo la **MIT License** - ver [LICENSE](LICENSE) para más detalles.
 
 ### Uso Académico
-Este proyecto fue desarrollado como parte de un proyecto final de asignatura de Desarrollo de Software con fines educativos.
 
-### Fuentes de Datos
-- La información de películas es proporcionada por The Movie Database (TMDB) API
-- TMDB API está sujeta a sus propios términos de servicio: https://www.themoviedb.org/terms-of-use
+Este proyecto fue desarrollado como parte de un proyecto final de la asignatura de **Desarrollo de Software** con fines educativos.
+
+### Atribuciones
+
+- Información de películas proporcionada por [The Movie Database (TMDB) API](https://www.themoviedb.org/)
+- TMDB API está sujeta a sus propios [términos de servicio](https://www.themoviedb.org/terms-of-use)
 - Este proyecto no está respaldado ni certificado por TMDB
 
----
-
-## Referencias
+## Enlaces Útiles
 
 - [TMDB API Documentation](https://developers.themoviedb.org/3)
 - [Bootstrap 5 Documentation](https://getbootstrap.com/docs/5.3/)
 - [MDN Web Docs - JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript)
 - [GitHub Pages Documentation](https://docs.github.com/es/pages)
 
----
-
-## Contacto
-
-**Bryan Velastegui** - [@bvelastegui](https://github.com/bvelastegui)  
-**Evelyn Morocho** - [@evelyn18m](https://github.com/evelyn18m)
-
----
-
 <div align="center">
-    <p><strong>Instituto Tecnológico Superior CENESTUR • 2026</strong></p>
+  
+  **Instituto Tecnológico Superior CENESTUR** • 2026
+  
+  Hecho con ❤️ usando Vanilla JavaScript
+  
 </div>
